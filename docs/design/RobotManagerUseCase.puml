@@ -1,0 +1,11 @@
+@startuml
+skinparam actorStyle awesome
+"Robot Manager" as manager #Blue
+manager --> (status)
+"Check robot status" as (status)
+manager --> (Repair robot)
+manager --> (Send robot/robots to room)
+manager --> (Check Room Status)
+manager --> (See logged snapshots of\nrobot and room status)
+manager --> (See room and robot information)
+@enduml
