@@ -8,4 +8,6 @@ manager --> (Send robot/robots to room)
 manager --> (Check Room Status)
 manager --> (See logged snapshots of\nrobot and room status)
 manager --> (See room and robot information)
+manager --> (disable a robot)
+manager --> (command multiple robots)
 @enduml
