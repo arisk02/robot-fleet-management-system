@@ -1,7 +1,7 @@
 # Use Case Diagrams
 This file details the high level use cases that will be availible for the robot actor as well as the robot manager actor when using our software. 
 
-[Click Here to return to the main design documentation file.](DESIGN.md)
+[Click Here to return to the main design documentation file.](../DESIGN.md)
 ## Robot Manager Use Case Diagram
 The Robot manager use case outlines the tasks availible to the main user of this software that wants to control and manage the fleet of robots. Use cases include:
 1. Check robot status
