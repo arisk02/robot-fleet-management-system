@@ -3,6 +3,16 @@ This file details the high level use cases that will be availible for the robot 
 
 [Click Here to return to the main design documentation file.](DESIGN.md)
 ## Robot Manager Use Case Diagram
+The Robot manager use case outlines the tasks availible to the main user of this software that wants to control and manage the fleet of robots. Use cases include:
+1. Check robot status
+2. Repair robot
+3. Send robot/robots to room
+4. Check room status
+5. See logged snapshots of robot and room status
+6. See room and robot information
+7. Disable a robot
+8. Command multiple robots
+
 
 ![Robot Manager Use Case Diagram](images/RobotManagerUseCase.png)
 ## Robot Use Case Diagram
