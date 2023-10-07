@@ -1,4 +1,4 @@
-@startuml
+@startuml RobotManagerUseCase
 skinparam actorStyle awesome
 "Robot Manager" as manager #Blue
 manager --> (status)
