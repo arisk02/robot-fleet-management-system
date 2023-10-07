@@ -16,12 +16,19 @@ The Robot manager use case outlines the tasks availible to the main user of this
 
 ![Robot Manager Use Case Diagram](images/RobotManagerUseCase.png)
 ## Robot Use Case Diagram
+The Robot use case outlines the user defined tasks available for the robot to execute, which are:
+1. Clean (mop, scrub, or vacuum depending on the type of the robot)
+2. Go offline for maintnence
+3. Recharge
 
-
+![Robot Manager Use Case Diagram](images/RobotUseCase.png)
 ### Developer contributions for part 1 of this project:
 
 Bereket
 I contributed by adding some user stories and by 
 modifying the puml diagram.
+
+Aris
+I made the Robot use-case diagram and added some user stories.
 
 
