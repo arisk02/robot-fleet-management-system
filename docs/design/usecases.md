@@ -24,11 +24,13 @@ The Robot use case outlines the user defined tasks available for the robot to ex
 ![Robot Manager Use Case Diagram](images/RobotUseCase.png)
 ### Developer contributions for part 1 of this project:
 
-Bereket
+Bereket:
 I contributed by adding some user stories and by 
 modifying the puml diagram.
 
-Aris
+Aris:
 I made the Robot use-case diagram and added some user stories.
 
+Ethan:
+I added use cases to the robot manager diagram and added a number of user stories. I also wrote the design.md file and outlined and added the robot manager diagram section to the usecases.md file.
 
