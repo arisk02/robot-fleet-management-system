@@ -4,7 +4,7 @@ This file details the high level use cases that will be availible for the robot 
 [Click Here to return to the main design documentation file.](DESIGN.md)
 ## Robot Manager Use Case Diagram
 
-![Robot Manager Use Case Diagram](out/docs/design/RobotManagerUseCase/RobotManagerUseCase.png)
+![Robot Manager Use Case Diagram](images/RobotManagerUseCase.png)
 ## Robot Use Case Diagram
 
 
