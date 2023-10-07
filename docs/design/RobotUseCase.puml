@@ -1,0 +1,19 @@
+@startuml robotUML
+
+actor robot
+
+skinparam package {
+    BackgroundColor LightBlue
+    BorderColor #CCCC
+    BorderThickness 2
+}
+
+package userDefined {
+    robot --> (clean)
+    "go offline for maintence" as (offLine)
+    robot --> (offLine)
+    robot --> (recharge)
+}
+
+
+@enduml robotUML
