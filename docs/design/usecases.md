@@ -34,3 +34,6 @@ I made the Robot use-case diagram and added some user stories.
 Ethan:
 I added use cases to the robot manager diagram and added a number of user stories. I also wrote the design.md file and outlined and added the robot manager diagram section to the usecases.md file.
 
+Caitlin 
+I contributed to the creation of the user stories and brainstorming the use-case diagrams.
+
