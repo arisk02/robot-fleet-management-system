@@ -1,5 +1,15 @@
 @startuml
-User -> Robot : Example
-
+User -> System : Clean command
+System -> Room : Request room information
+Room -> System : Supply room information
+System -> Robot : Request robot information
+Robot -> System : Supply robot information
+alt Successful Cleaning
+    System -> Room : Update status to clean
+    System -> Robot : Update status to ready
+else Robot failure
+    System -> Room : Update status to not clean
+    System -> Robot : Update status to broken
+end
 
 @enduml
