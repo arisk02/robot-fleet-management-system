@@ -11,7 +11,6 @@ Robot <|-- Sweeper
 Robot <|-- Vacuum
 Robot <|-- Mopper
 System *-- Room
-System *-- Logger
-Room --> Robot
+Logger -> System
 
 @enduml
