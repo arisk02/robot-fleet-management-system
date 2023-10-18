@@ -2,14 +2,16 @@
 User -> System : Clean command
 System -> Room : Request room size and status
 Room -> System : Supply room size and status
-alt Room status is being cleaned
+alt Room status is being cleaned 
     System -> User : Error message (cleaning in progress)
 else Room status is dirty or clean
     System -> Robot : Request robot status\nand cleaning time 
     Robot -> System : Supply robot status\nand cleaning time
-    alt Robot is broken or already occupied
+    alt Robot is broken or already occupied #Green
         System -> User : Error message (robot occupied or broken)
     else All robots ready to be cleaned
+        activate System #LightBlue
+        System -> System : Simulate cleaning
         alt Successful Cleaning
             System -> Room : Update status to clean
             System -> Robot : Update status to ready
@@ -17,6 +19,7 @@ else Room status is dirty or clean
             System -> Room : Update status to not clean
             System -> Robot : Update status to broken
         end
+        deactivate System
     end
 end
 
