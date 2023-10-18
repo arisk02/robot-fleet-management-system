@@ -6,6 +6,12 @@ class Vacuum
 class Mopper
 class Room
 class Logger
-
+System *-- Robot
+Robot <|-- Sweeper
+Robot <|-- Vacuum
+Robot <|-- Mopper
+System *-- Room
+System *-- Logger
+Room --> Robot
 
 @enduml
