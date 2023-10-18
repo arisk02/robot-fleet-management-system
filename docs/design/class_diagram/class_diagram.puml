@@ -1,4 +1,5 @@
 @startuml
+Class System
 Abstract class Robot
 class Sweeper
 class Vacuum
