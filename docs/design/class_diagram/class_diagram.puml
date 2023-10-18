@@ -1,0 +1,10 @@
+@startuml
+Abstract class Robot
+class Sweeper
+class Vacuum
+class Mopper
+class Room
+class Logger
+
+
+@enduml
