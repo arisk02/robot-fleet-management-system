@@ -11,6 +11,8 @@ else Room status is dirty or clean
         System -> User : Error message (robot occupied or broken)
     else All robots ready to be cleaned
         activate System #LightBlue
+        System -> Robot : Change status to busy
+        System -> Room : Change status to cleaning in progress
         System -> System : Simulate cleaning
         alt Successful Cleaning
             System -> Room : Update status to clean
