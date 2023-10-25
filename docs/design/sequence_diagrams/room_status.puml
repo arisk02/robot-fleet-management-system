@@ -1,0 +1,8 @@
+@startuml
+
+User ->  System: Enter Room status command 
+System -> Room: Requests status
+Room -> System: Returns Status [size, clean or not clean]
+System -> User: Outputs status [size, cleanliness]
+
+@enduml
