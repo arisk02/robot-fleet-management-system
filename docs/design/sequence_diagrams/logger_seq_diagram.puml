@@ -1,0 +1,38 @@
+@startuml loggerSequence
+!define CSVFILE class width 80
+!define LOGGER class width 80
+!define SYSTEM class width 80
+!define ROBOT class width 80
+
+actor CSVfile
+actor Logger
+actor System
+actor Robot
+actor Room
+
+hide footbox
+
+loop 
+Logger -> System: requestStatus()
+activate System
+loop for each Robot
+    System -> Robot: requestStatus()
+    activate Robot
+    Robot --> System: status
+    deactivate Robot
+end loop
+loop for each Room
+    System -> Room: requestStatus()
+    activate Room
+    Room --> System: status
+    deactivate Room
+end loop
+System --> Logger: collective status
+deactivate System
+
+Logger -> CSVfile: writeStatusToCSV()
+
+Logger -> Logger: wait x amount of time
+end loop
+
+@enduml loggerSequence
