@@ -1,0 +1,7 @@
+@startuml
+
+user -> system: Enters Recharge command
+system-> system: charging simulation (some passage of time)
+system -> user: message [sucessfully recharged.]
+
+@enduml
