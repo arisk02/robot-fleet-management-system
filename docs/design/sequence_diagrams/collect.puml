@@ -1,0 +1,7 @@
+@startuml
+
+User -> System: Enters Collect command
+System -> System: Simulate collecting and repairing \nof robot(through passage of time)
+System -> User: Message [sucessfully fixed robot.] 
+
+@enduml 

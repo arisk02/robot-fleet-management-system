@@ -1,7 +1,7 @@
 @startuml
 
-user -> system: Enters Recharge command
-system-> system: charging simulation (some passage of time)
-system -> user: message [sucessfully recharged.]
+User -> System: Enters Recharge command
+System-> System: Charging simulation (through passage of time)
+System -> User: Message [sucessfully recharged.]
 
 @enduml
