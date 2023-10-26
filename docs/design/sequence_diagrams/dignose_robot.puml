@@ -1,13 +1,11 @@
 @startuml
 User -> System : Fix command
-System -> Robot : Request robot status
-Robot -> System : Provide status like battery level and task progress
-alt Robot not responsive(no status provided)
-    System -> User : Message to user (communication error; please enter Collect command to fix)
-else Battery level too low 
+System -> Robot : Request robot battery level
+Robot -> System : Provide battery level
+alt Battery level too low 
     System -> User : Message to user (battery too low; enter Recharge command to fix)
-else Some component of a robot is broken or issue unknown
-    System -> User: Message to user(component failiure; please enter Collect command to fix)
+else Robot is broken
+    System -> User: Message to user(component failiure; please enter Fix command to fix)
 end
 
 @enduml
