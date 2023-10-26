@@ -1,0 +1,11 @@
+@startuml
+User -> System : Request robot status
+loop For each robot
+System -> Robot : Request type, activity status, \ntime last in use
+Robot -> System : Send back type, activity status, \n and time last in use
+activate System #LightBlue
+System -> System : Package/format data
+System -> User : Output/print data for robot
+deactivate
+end 
+@enduml
