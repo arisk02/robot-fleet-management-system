@@ -1,0 +1,11 @@
+@startuml
+User -> System : Fix command
+System -> Robot : Request robot battery level
+Robot -> System : Provide battery level
+alt Battery level too low 
+    System -> User : Message to user (battery too low; enter Recharge command to fix)
+else Robot is broken
+    System -> User: Message to user(component failiure; please enter Fix command to fix)
+end
+
+@enduml
