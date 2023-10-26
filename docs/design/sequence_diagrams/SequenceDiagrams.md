@@ -32,7 +32,7 @@ When A robots battery level has fully depleted. the robot will cease working and
 ## Logger Object
 This sequence diagram shows the functionality containted within the loop that the logger will run on. The logger must collect certain information every x seconds and add that information onto a csv file. The logger will run on an independent thread and run this loop continuously
 
-![Logger Sequence Diagram](images/LoggerSequence.png)
+![Logger Sequence Diagram](images/loggerSequence.png)
 
 
 ## Query Room Status
