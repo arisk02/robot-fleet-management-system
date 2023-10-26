@@ -33,3 +33,14 @@ When A robots battery level has fully depleted. the robot will cease working and
 This sequence diagram shows the functionality containted within the loop that the logger will run on. The logger must collect certain information every x seconds and add that information onto a csv file. The logger will run on an independent thread and run this loop continuously
 
 ![Logger Sequence Diagram](images/LoggerSequence.png)
+
+
+## Query Room Status
+The user will have the ability to request the status of all rooms currently in the system. This will return information back to the user about the room such as cleanliness and size.
+
+![Room Status Sequence Diagram](images/room_status.png)
+
+## Query Robot Status
+The User will also have the ability to request the status of all robots in the system. This will return information such as robot type, activity status, and time last in use.
+
+![Robot Status Sequence Diagram](images/robot_status_query.png)
