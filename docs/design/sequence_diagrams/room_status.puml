@@ -1,0 +1,13 @@
+@startuml
+
+User ->  System: Enter Room status command
+loop For each room
+System -> Room: Requests status
+Room -> System: Returns Status [size, clean or not clean]
+activate System #LightGoldenRodYellow
+System -> System : Format Data
+System -> User: Outputs status [size, cleanliness]
+deactivate
+end
+
+@enduml
