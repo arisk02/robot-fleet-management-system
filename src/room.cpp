@@ -1,4 +1,4 @@
-#include "room.hpp"
+#include "hppfiles/room.hpp"
 
 
     Room(): size(Size::medium), clean(true), occupiedByRobot(false) {} //default constructor
