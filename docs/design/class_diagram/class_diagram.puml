@@ -33,9 +33,16 @@ class Room{
     -name : String
     -size : enum
     -clean : Boolean
-    
+    +isClean()
+    +getSize()
+    +getName()
 }
-class Logger
+class Logger{
+    -snapshotInterval
+    -saveFile
+    -save(data)
+    -serialize(listData)
+}
 System *-- Robot
 Robot <|-- Sweeper
 Robot <|-- Vacuum
