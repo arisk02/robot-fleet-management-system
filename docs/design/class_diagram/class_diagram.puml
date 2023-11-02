@@ -1,10 +1,40 @@
 @startuml
-Class System
-Abstract class Robot
+Class System{
+    -robotList : List
+    -roomList : List
+    +queryRobotStatus(listRobots)
+    +queryRoomStatus(listRooms)
+    +clean(room, listRobots)
+    +repair(robot)
+    +recharge(robot)
+}
+Abstract class Robot{
+    -type : enum
+    -size : enum
+    -cleanTime : int
+    -breakOdds : float
+    -battery : int
+    -activityStatus : enum
+    -lastUsed : Date
+    +getStatus()
+    +getType()
+    +getBattery()
+    +setBattery()
+    +getCleanTime()
+    +getBreakOdds()
+    +setActivityStatus()
+    +setLastUsed()
+    +getLastUsed()
+}
 class Sweeper
 class Vacuum
 class Mopper
-class Room
+class Room{
+    -name : String
+    -size : enum
+    -clean : Boolean
+    
+}
 class Logger
 System *-- Robot
 Robot <|-- Sweeper
