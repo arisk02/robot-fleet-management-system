@@ -10,3 +10,20 @@ system::system() : {
     &robots.push_back(Vacuum::Vacuum(RobotSize::LARGE, int 6));
     &robots.push_back(Vacuum::Vacuum(RobotSize::MEDIUM, int 7));
 }
+list<string> queryRobotStatus(list<Robot::Robot> listRobots){
+    for (int i=0, i<list::size(&robots),i++){
+        
+    }
+}
+list<string> queryRoomStatus(list<Room::Room> listRooms){
+
+}
+void clean(Room::Room room,list<Robot::Robot> listRobots){
+
+}
+void repair(string robot){
+
+}
+void recharge(string robot){
+
+}
