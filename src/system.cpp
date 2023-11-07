@@ -1,14 +1,12 @@
 #include "hppfiles/system.hpp"
 
 system::system() : {
-    int smallMopper = 1;
-    int largeMopper = 2;
-    int smallVaccume = 2;
-    int largeVaccume = 3;
-    int smallScrubber = 1;
-    int largeScrubber = 1;
-    for (int i = 0, i < smallMopper, i++) {
-        
-    }
-
+    &rooms.push_back(Roon:Roon(Size::Medium, true));
+    &robots.push_back(Mopper::Mopper(RobotSize::SMALL, int 1));
+    &robots.push_back(Mopper::Mopper(RobotSize::MEDIUM, int 2));
+    &robots.push_back(Mopper::Mopper(RobotSize::LARGE, int 3));
+    &robots.push_back(Scrubber::Scrubber(RobotSize::SMALL, int 4));
+    &robots.push_back(Scrubber::Scrubber(RobotSize::LARGE, int 5));
+    &robots.push_back(Vacuum::Vacuum(RobotSize::LARGE, int 6));
+    &robots.push_back(Vacuum::Vacuum(RobotSize::MEDIUM, int 7));
 }
