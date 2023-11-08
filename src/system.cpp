@@ -31,10 +31,41 @@ list<string> queryRobotStatus(list<Robot::Robot> listRobotStrings){
     }
     return statusList;
 }
-list<string> queryRoomStatus(list<Room::Room> listRooms){
-
+list<string> queryRoomStatus(list<string> listRooms){
+    std::list<Room::Room> selectedRooms;
+    auto allrooms = rooms.begin();
+    for (string name : listRooms) {
+        for (int i=0, i<list::size(rooms),i++){
+            if (std::advance(allrooms, i).getRoomId == name) {//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
+                selectedRooms.push_back(std::advance(allrooms, i));
+            }
+        }
+    }
+    auto roomsIT = selectedRooms.begin();
+    std::list<std::string> statusList;
+    for (int i=0, i<list::size(selectedRooms),i++){
+        statusList.push_back(std::advance(roomsIT, i).getRoomId());//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
+        Size temp = std::advance(roomsIT, i).getSize();
+        if(temp==Size::small){
+            statusList.push_back("small");
+        }
+        else if(temp==Size::medium){
+            statusList.push_back("medium");
+        }
+        else{
+            statusList.push_back("large");
+        }
+        if (std::advance(roomsIT, i).getClean()){
+            statusList.push_back("Clean");
+        }
+        else {
+            statusList.push_back("Dirty");
+        }
+        
+    }
+    return statusList;
 }
-void clean(Room::Room room,list<Robot::Robot> listRobots){
+void clean(Room::Room room,list<string> listRobots){
     return
 }
 void repair(string robot){
@@ -49,7 +80,7 @@ list<Robot::Robot> getRobots(list<string> ids){
     for (string name : ids){
         for (int i = 0, i<list::size(robots),i++){
             if (std::advance(bots, i).getRobotId() == name){
-                &selectedRobots.push_back(std::advance(bots, i));
+                selectedRobots.push_back(std::advance(bots, i));
             }
         }
     }
