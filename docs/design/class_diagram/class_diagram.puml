@@ -9,26 +9,26 @@ Class System{
     +recharge(robot)
 }
 Abstract class Robot{
-    -id : String
+    -robotId : int
     -type : enum
     -size : enum
     -cleanTime : int
-    -breakOdds : float
-    -maxBattery : int
-    -battery : int
-    -activityStatus : enum
-    -lastUsed : Date
-    +getID()
-    +getStatus()
-    +getType()
-    +getBattery()
-    +getMaxBattery()
-    +setBattery()
-    +getCleanTime()
-    +getBreakOdds()
-    +setActivityStatus()
-    +setLastUsed()
-    +getLastUsed()
+    -breakOdds : const float
+    -maxBattery : const int
+    -batteryLevel : int
+    -status : enum
+    -lastUsed : time_t
+    +getRobotId()
+    +getRobotStatus()
+    +getRobotType()
+    +getRobotBatteryLevel()
+    +getRobotMaxBattery()
+    +setRobotBatteryLevel()
+    +getRobotCleanTime()
+    +getRobotBreakOdds()
+    +setRobotStatus()
+    +setRobotLastUsed()
+    +getRobotLastUsed()
 }
 class Sweeper
 class Vacuum
