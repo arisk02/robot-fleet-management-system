@@ -1,6 +1,7 @@
 #ifndef HPPFILES_SYSTEM_HPP
 #define HPPFILES_SYSTEM_HPP
 #include <list>
+#include <string>
 #include "robot.hpp"
 #include "room.hpp"
 
@@ -11,6 +12,7 @@ namespace system
         private:
         std::list<Robot::Robot> *robots;
         std::list<Room::Room> *rooms;
+        list<Robot::Robot> getRobots(list<string> ids);
 
         public:
         list<string> queryRobotStatus(list<Robot::Robot> listRobots);
@@ -18,6 +20,7 @@ namespace system
         void clean(Room::Room room,list<Robot::Robot> listRobots);
         void repair(string robot);
         void recharge(string robot);
+        
 
     }
 }

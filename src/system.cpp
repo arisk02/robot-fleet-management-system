@@ -1,5 +1,6 @@
 #include "hppfiles/system.hpp"
 
+
 system::system() : {
     &rooms.push_back(Roon:Roon(Size::Medium, true));
     &robots.push_back(Mopper::Mopper(RobotSize::SMALL, int 1));
@@ -11,19 +12,32 @@ system::system() : {
     &robots.push_back(Vacuum::Vacuum(RobotSize::MEDIUM, int 7));
 }
 list<string> queryRobotStatus(list<Robot::Robot> listRobots){
-    for (int i=0, i<list::size(&robots),i++){
-        
+    std::list<std::string> statusList;
+    for (int i=0, i<list::size(listRobots),i++){
+
     }
 }
 list<string> queryRoomStatus(list<Room::Room> listRooms){
 
 }
 void clean(Room::Room room,list<Robot::Robot> listRobots){
-
+    return
 }
 void repair(string robot){
-
+    return
 }
 void recharge(string robot){
-
+    return
+}
+list<Robot::Robot> getRobots(list<string> ids){
+    std::list<Robot::Robot> *selectedRobots;
+    auto bots = &robots.begin();
+    for (string name : ids){
+        for (int i = 0, i<list::size(&robots),i++){
+            if (std::advance(bots, i).getRobotId() == name){
+                &selectedRobots.push_back(&std::advance(bots, i));
+            }
+        }
+    }
+    return selectedRobots;
 }
