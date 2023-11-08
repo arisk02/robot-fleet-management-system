@@ -15,9 +15,9 @@ namespace system
         list<Robot::Robot> getRobots(list<string> ids);
 
         public:
-        list<string> queryRobotStatus(list<Robot::Robot> listRobots);
-        list<string> queryRoomStatus(list<Room::Room> listRooms);
-        void clean(Room::Room room,list<Robot::Robot> listRobots);
+        list<string> queryRobotStatus(list<string> listRobots);
+        list<string> queryRoomStatus(list<string> listRooms);
+        void clean(Room::Room room,list<string> listRobots);
         void repair(string robot);
         void recharge(string robot);
         

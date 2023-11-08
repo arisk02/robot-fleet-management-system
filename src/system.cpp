@@ -14,7 +14,7 @@ system::system() : {
 list<string> queryRobotStatus(list<Robot::Robot> listRobots){
     std::list<std::string> statusList;
     for (int i=0, i<list::size(listRobots),i++){
-
+        
     }
 }
 list<string> queryRoomStatus(list<Room::Room> listRooms){
