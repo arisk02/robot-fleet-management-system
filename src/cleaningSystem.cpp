@@ -24,52 +24,49 @@ namespace cleaningSystem {
         }
         return selectedRobots;
     }
-    vector<string> cleaningSystem::queryRobotStatus(vector<Robot> listRobotStrings){
-        std::vector<Robot> robotsList = getRobots(listRobotStrings);
+    vector<string> cleaningSystem::queryRobotStatus(vector<int> listRobotints){
+        std::vector<Robot> robotsList = getRobots(listRobotints);
         std::vector<string> statusList;
-        auto bots = robotsList.begin();
-        for (int i=0; i<list::size(robotsList); i++){
-            statusList.push_back(std::to_string(std::advance(bots, i).getRobotId()));
-            RobotStatus temp = std::advance(bots, i).getRobotStatus();
+        for (int i=0; i<robotsList.size(); i++){
+            statusList.push_back(std::to_string(robotsList.at(i).getRobotId()));
+            RobotStatus temp = robotsList.at(i).getRobotStatus();
             if(temp==RobotStatus::CLEANING){
                 statusList.push_back("Cleaning");
             }
             else if (temp==RobotStatus::BROKEN){
-                statusList.push_back("Broken")
+                statusList.push_back("Broken");
             }
             else {
-                statusList.push_back("Availible")
+                statusList.push_back("Availible");
             }
-            statusList.push_back(std::to_string(std::advance(bots, i).getRobotBatteryLevel()));
+            statusList.push_back(std::to_string(robotsList.at(i).getRobotBatteryLevel()));
         }
         return statusList;
     }
 
-    vector<string> cleaningSystem::queryRoomStatus(vector<string> listRooms){
+    vector<string> cleaningSystem::queryRoomStatus(vector<int> listRooms){
         std::vector<Room> selectedRooms;
-        auto allrooms = rooms.begin();
-        for (string name : listRooms) {
-            for (int i=0, i<list::size(rooms),i++){
-                if (std::advance(allrooms, i).getRoomId == name) {//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
-                    selectedRooms.push_back(std::advance(allrooms, i));
+        for (int name : listRooms) {
+            for (int i=0; i<rooms.size();i++){
+                if (rooms.at(i).getRoomId() == name) {//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
+                    selectedRooms.push_back(rooms.at(i));
                 }
             }
         }
-        auto roomsIT = selectedRooms.begin();
-        std::list<std::string> statusList;
-        for (int i=0, i<list::size(selectedRooms),i++){
-            statusList.push_back(std::advance(roomsIT, i).getRoomId());//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
-            Size temp = std::advance(roomsIT, i).getSize();
-            if(temp==Size::small){
+        std::vector<string> statusList;
+        for (int i=0; i<selectedRooms.size();i++){
+            statusList.push_back(selectedRooms.at(i).getRoomId());//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
+            Room::Size temp = selectedRooms.at(i).getSize();
+            if(temp==Room::Size::small){
                 statusList.push_back("small");
             }
-            else if(temp==Size::medium){
+            else if(temp==Room::Size::medium){
                 statusList.push_back("medium");
             }
             else{
                 statusList.push_back("large");
             }
-            if (std::advance(roomsIT, i).getClean()){
+            if (selectedRooms.at(i).getClean()){
                 statusList.push_back("Clean");
             }
             else {
@@ -79,14 +76,14 @@ namespace cleaningSystem {
         }
         return statusList;
     }
-    void cleaningSystem::clean(Room::Room room,list<string> listRobots){
-        return
+    void cleaningSystem::clean(Room room,vector<int> listRobots){
+        
     }
     void cleaningSystem::repair(string robot){
-        return
+        
     }
     void cleaningSystem::recharge(string robot){
-        return
+        
     }
 
 }

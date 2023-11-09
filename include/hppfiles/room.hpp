@@ -1,7 +1,6 @@
 #ifndef ROOM_HPP
 #define ROOM_HPP
 
-#include <iostream>
 #include <cstdlib> 
 
 class Room {
