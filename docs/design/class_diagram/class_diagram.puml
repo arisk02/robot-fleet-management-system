@@ -1,17 +1,57 @@
 @startuml
-Class System
-Abstract class Robot
+Class System{
+    -robotList : List
+    -roomList : List
+    +queryRobotStatus(listRobots)
+    +queryRoomStatus(listRooms)
+    +clean(room, listRobots)
+    +repair(robot)
+    +recharge(robot)
+}
+Abstract class Robot{
+    -robotId : int
+    -type : enum
+    -size : enum
+    -cleanTime : int
+    -breakOdds : const float
+    -maxBattery : const int
+    -batteryLevel : int
+    -status : enum
+    -lastUsed : time_t
+    +getRobotId()
+    +getRobotStatus()
+    +getRobotType()
+    +getRobotBatteryLevel()
+    +getRobotMaxBattery()
+    +setRobotBatteryLevel()
+    +getRobotCleanTime()
+    +getRobotBreakOdds()
+    +setRobotStatus()
+    +setRobotLastUsed()
+    +getRobotLastUsed()
+}
 class Sweeper
 class Vacuum
 class Mopper
-class Room
-class Logger
+class Room{
+    -name : String
+    -size : enum
+    -clean : Boolean
+    +isClean()
+    +getSize()
+    +getName()
+}
+class Logger{
+    -snapshotInterval
+    -saveFile
+    -save(data)
+    -serialize(listData)
+}
 System *-- Robot
 Robot <|-- Sweeper
 Robot <|-- Vacuum
 Robot <|-- Mopper
 System *-- Room
-System *-- Logger
-Room --> Robot
+Logger -> System
 
 @enduml
