@@ -4,6 +4,7 @@ project(CleaningSystemLib)
 include(dependencies.cmake)
 
 add_library(CleaningSystemLib
+  
   src/mopper.cpp
   src/robot.cpp
   src/room.cpp

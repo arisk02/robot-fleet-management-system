@@ -1,6 +1,6 @@
 #include "hppfiles/cleaningSystem.hpp"
 
-namespace cleaningSystem {
+namespace cleaningSys {
 
 
     cleaningSystem::cleaningSystem() { 

@@ -6,7 +6,7 @@
 class Vacuum : public Robot {
 public:
     Vacuum(RobotSize robotSize, int robotId);
-    void performTask() const override;
+    //void performTask() const override;
 };
 
 #endif

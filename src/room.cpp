@@ -3,7 +3,7 @@
 
     Room::Room() : size(Size::medium), clean(true), occupiedByRobot(false), RoomId(0) {} //default constructor
 
-    //Room(Size newSize, bool newClean): size(newSize), clean(newClean), occupiedByRobot(false) {} //constructor
+    Room::Room(Size newSize, bool newClean, int id) : size(newSize), clean(newClean), occupiedByRobot(false), RoomId(id) {} //constructor
 
 /*
     void setSize(Room::Size newSize) { 

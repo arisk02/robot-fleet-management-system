@@ -1,9 +1,10 @@
 #include "../include/hppfiles/cleaningSystem.hpp"
-#include <iostream>
+#include <fmt/core.h>
 #include <string>
 
 using namespace std;
+using namespace cleaningSys;
 
 int main() {
-    cout << "hello";
+    cleaningSystem sys = cleaningSystem();
 }

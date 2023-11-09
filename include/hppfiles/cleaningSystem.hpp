@@ -8,7 +8,7 @@
 #include "vacuum.hpp"
 
 using namespace std;
-namespace cleaningSystem
+namespace cleaningSys
 {
     class cleaningSystem {
         private:
