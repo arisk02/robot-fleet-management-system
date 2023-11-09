@@ -5,7 +5,8 @@
 #include "mopper.hpp"
 #include "scrubber.hpp"
 #include <string>
-#include "vacuum.hpp"
+#include "vacuum.hpp" 
+#include <vector>
 
 using namespace std;
 namespace cleaningSys
