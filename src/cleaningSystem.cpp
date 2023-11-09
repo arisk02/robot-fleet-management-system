@@ -1,4 +1,5 @@
 #include "hppfiles/cleaningSystem.hpp"
+#include <iostream>
 
 namespace cleaningSys {
 
@@ -72,12 +73,31 @@ namespace cleaningSys {
             else {
                 statusList.push_back("Dirty");
             }
+            if (selectedRooms.at(i).getOccupiedByRobot()){
+                statusList.push_back("occupied by robot");
+            }
+            else {
+                statusList.push_back("not occupied by robot");
+            }
             
         }
         return statusList;
     }
-    void cleaningSystem::clean(Room room,vector<int> listRobots){
-        
+    void cleaningSystem::clean(int roomid,vector<int> listRobots){
+        for(Room& room : rooms){
+            if(room.getId() == roomid){
+                room.setOccupiedByRobot(true);
+            }
+        }
+        for(int id : listRobots){
+            for(Robot& robot : robots){
+                if(robot.getRobotId() == id) {
+                    robot.setLastUsed(time(0));
+                    robot.setRobotStatus(RobotStatus::CLEANING);
+                    robot.performTask();
+                }
+            }
+        }
     }
     void cleaningSystem::repair(string robot){
         

@@ -26,6 +26,8 @@ public:
     inline void setSize(Size newSize) {size = newSize;}
     inline void setClean(bool newClean) {clean = newClean;}
     inline bool getClean() {return clean;}
+    inline bool getOccupiedByRobot() {return occupiedByRobot;}
+    inline void setOccupiedByRobot(bool newOccupied) {occupiedByRobot = newOccupied;}
 };
 
 #endif

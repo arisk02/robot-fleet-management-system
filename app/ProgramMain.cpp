@@ -18,7 +18,8 @@ int main() {
         cout << "Main:" << endl;
         cout << "1. See Robot Status" << endl;
         cout << "2. See Room Status" << endl;
-        cout << "3. Quit" << endl;
+        cout << "3. Clean a Room" << endl;
+        cout << "4. Quit" << endl;
 
         int choice; //potential bug: if user enters a non-integer, the program will crash
         cout << "Enter your choice: ";
@@ -43,9 +44,9 @@ int main() {
             vector<int> rooms;
             rooms.push_back(1);
             auto status = newCleaningSystem.queryRoomStatus(rooms);
-            int itemPerRoom = 3;
+            int itemPerRoom = 4;
             for (int i = 0; i < status.size(); i += itemPerRoom) {
-                cout << "Room " << status[i] << " is " << status[i + 1] << " and is " << status[i + 2] << endl;
+                cout << "Room " << status[i] << " is " << status[i + 1] << " and is " << status[i + 2] << " and is " << status[i + 3] << endl;
             }
 
             cout << "Type anything to return to the main menu: ";
@@ -53,6 +54,32 @@ int main() {
             cin >> val;
 
         } else if (choice == 3) {
+            int roomid; //potential bug: if user enters a non-integer, the program will crash
+            cout << "Enter the id of the room you want to clean: ";
+            cin >> roomid;
+
+            vector<int> robots;
+
+            while(true){
+                int robotsids; //potential bug: if user enters a non-integer, the program will crash
+                cout << "Enter the id of the robot you want to assign: ";
+                cin >> robotsids;
+                robots.push_back(robotsids);
+                int st; //potential bug: if user enters a non-integer, the program will crash
+                cout << "If you want to assign more robots, enter 1, otherwise 0: ";
+                cin >> st;
+                if (st == 0){
+                    break;
+                }
+            }
+
+            newCleaningSystem.clean(roomid, robots);
+            
+            cout << "Type anything to return to the main menu: ";
+            string val;
+            cin >> val;
+
+        } else if (choice == 4) {
             cout << "Goodbye!" << endl;
             break;
         } else {
