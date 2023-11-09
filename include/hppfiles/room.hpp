@@ -15,11 +15,13 @@ private:
     Size size; 
     bool clean;
     bool occupiedByRobot;
+    int RoomId;
 
 public:
     Room(); // Default constructor
-    Room(Size newSize, bool newClean); // Constructor
+    Room(Size newSize, bool newClean, int id); // Constructor
 
+    inline int getId();
     inline Size getSize() const{return size;}
     inline void setSize(Size newSize) {size = newSize;}
     inline void setClean(bool newClean) {clean = newClean;}
