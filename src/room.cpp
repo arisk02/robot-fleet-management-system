@@ -1,7 +1,7 @@
 #include "hppfiles/room.hpp"
 
 
-    Room::Room() : size(Size::medium), clean(true), occupiedByRobot(false) {} //default constructor
+    Room::Room() : size(Size::medium), clean(true), occupiedByRobot(false), RoomId(0) {} //default constructor
 
     //Room(Size newSize, bool newClean): size(newSize), clean(newClean), occupiedByRobot(false) {} //constructor
 
