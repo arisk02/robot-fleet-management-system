@@ -21,7 +21,7 @@ public:
     Room(); // Default constructor
     Room(Size newSize, bool newClean, int id); // Constructor
 
-    inline int getId();
+    inline int getId() const{return RoomId;}
     inline Size getSize() const{return size;}
     inline void setSize(Size newSize) {size = newSize;}
     inline void setClean(bool newClean) {clean = newClean;}

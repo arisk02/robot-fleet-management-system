@@ -4,7 +4,7 @@ namespace cleaningSystem {
 
 
     cleaningSystem::cleaningSystem() { 
-        rooms.push_back(Room(Room::Size::medium, true));
+        rooms.push_back(Room(Room::Size::medium, true, 1));
         robots.push_back(Mopper(RobotSize::SMALL, 1));
         robots.push_back(Mopper(RobotSize::MEDIUM, 2));
         robots.push_back(Mopper(RobotSize::LARGE, 3));
@@ -48,14 +48,14 @@ namespace cleaningSystem {
         std::vector<Room> selectedRooms;
         for (int name : listRooms) {
             for (int i=0; i<rooms.size();i++){
-                if (rooms.at(i).getRoomId() == name) {//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
+                if (rooms.at(i).getId() == name) {
                     selectedRooms.push_back(rooms.at(i));
                 }
             }
         }
         std::vector<string> statusList;
         for (int i=0; i<selectedRooms.size();i++){
-            statusList.push_back(selectedRooms.at(i).getRoomId());//THIS WILL NEED UPDATING ONCE ROOM OBJ HAS ID
+            statusList.push_back(to_string(selectedRooms.at(i).getId()));
             Room::Size temp = selectedRooms.at(i).getSize();
             if(temp==Room::Size::small){
                 statusList.push_back("small");

@@ -14,7 +14,7 @@ class Robot
 {
     public:
         Robot(RobotType robotType, RobotSize robotSize, int robotId);   // constructor
-        virtual void performTask() const = 0;                           // virtual method that is implemented in Mopper, Scrubber, Vacuum
+        virtual void performTask() const;                           // virtual method that is implemented in Mopper, Scrubber, Vacuum
         virtual ~Robot();                                               // destructor
 
         inline int          getRobotId()            const{return robotId;}         // returns robotId
