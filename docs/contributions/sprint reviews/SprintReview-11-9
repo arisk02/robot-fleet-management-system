@@ -1,0 +1,31 @@
+# Nov. 9 Sprint Review
+
+## Ethan:
+- built out cleaningSystem (formerly sytem) class and implemented the queryRobotStatus and queryRoomStatus functions
+- updated the CMake file
+- worked on fixing numerous bugs to make the code compile
+- reconfigured cleaningSystem to use vectors instead of list objects to store rooms and robots
+
+## Bereket
+- created the main file
+- updated room class
+
+## Aris
+- built out Robot abstract class and Mopper subclass, overviewed making of Scrubber and Vacuum
+- added extra Cleaning feature to the Main in the prototype branch
+- worked on cleaning out the bugs as well as making code consistent across all files
+
+## Caitlin
+ - Researched CMake for the CMake file
+ - Convert iostream to fmt for enhancement
+
+
+
+
+
+## What we did well:
+We worked pretty cohiesively and had better communication than in past weeks. We all seemed to have our own things and were able to independently develop them while also communicating with each other about necessary details when needed.
+
+## What we could improve:
+We still have a slight issue with promptness. We did begin work earlier this week, but there was still a lot of work done within the last 24 hours. We may need to have internal due dates for things that fall before the thursday dealines. We should also work on making more consistent
+code by first working out all function and data field names and their types before implementing (planning better before implementation).
