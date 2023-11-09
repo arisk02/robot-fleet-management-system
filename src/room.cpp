@@ -1,15 +1,12 @@
 #include "hppfiles/room.hpp"
 
 
-    Room(): size(Size::medium), clean(true), occupiedByRobot(false) {} //default constructor
+    Room::Room() : size(Size::medium), clean(true), occupiedByRobot(false), RoomId(0) {} //default constructor
 
-    Room(Size newSize, bool newClean): size(newSize), clean(newClean), occupiedByRobot(false) {} //constructor
+    //Room(Size newSize, bool newClean): size(newSize), clean(newClean), occupiedByRobot(false) {} //constructor
 
-
-    Size getSize() {
-        return size;
-    }
-    void setSize(Size newSize) { 
+/*
+    void setSize(Room::Size newSize) { 
         size = newSize;
     }
 
@@ -25,3 +22,4 @@
             return result;
         }
      }
+*/

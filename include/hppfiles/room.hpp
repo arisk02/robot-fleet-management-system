@@ -1,7 +1,6 @@
 #ifndef ROOM_HPP
 #define ROOM_HPP
 
-#include <iostream>
 #include <cstdlib> 
 
 class Room {
@@ -16,15 +15,17 @@ private:
     Size size; 
     bool clean;
     bool occupiedByRobot;
+    int RoomId;
 
 public:
     Room(); // Default constructor
-    Room(Size newSize, bool newClean); // Constructor
+    Room(Size newSize, bool newClean, int id); // Constructor
 
-    Size getSize();
-    void setSize(Size newSize);
-    void setClean(bool newClean);
-    bool getClean();
+    inline int getId() const{return RoomId;}
+    inline Size getSize() const{return size;}
+    inline void setSize(Size newSize) {size = newSize;}
+    inline void setClean(bool newClean) {clean = newClean;}
+    inline bool getClean() {return clean;}
 };
 
 #endif

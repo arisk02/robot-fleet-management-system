@@ -1,10 +1,10 @@
-add_executable(say_hello
-  say_hello.cpp
+add_executable(ProgramMain
+  ProgramMain.cpp
 )
 
-target_link_libraries(say_hello
+target_link_libraries(ProgramMain
   PRIVATE
-    libhello
+    CleaningSystemLib
 )
 
-target_compile_features(say_hello PRIVATE cxx_std_20)
+target_compile_features(ProgramMain PRIVATE cxx_std_20)

@@ -1,18 +1,23 @@
 cmake_minimum_required(VERSION 3.16)
-project(libhello)
+project(CleaningSystemLib)
 
 include(dependencies.cmake)
 
-add_library(libhello
-  src/hello.cpp
+add_library(CleaningSystemLib
+  src/mopper.cpp
+  src/robot.cpp
+  src/room.cpp
+  src/scrubber.cpp
+  src/cleaningSystem.cpp
+  src/vacuum.cpp
 )
 
-target_include_directories(libhello
+target_include_directories(CleaningSystemLib
   PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
 )
 
-target_link_libraries(libhello
+target_link_libraries(CleaningSystemLib
   fmt::fmt
 )
 
