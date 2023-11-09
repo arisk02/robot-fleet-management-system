@@ -13,17 +13,18 @@ namespace cleaningSystem
 {
     class cleaningSystem {
         private:
-        std::list<Robot> *robots;
-        std::list<Room> *rooms;
-        list<Robot> getRobots(list<string> ids);
+        std::vector<Robot> robots;
+        std::vector<Room> rooms;
+        vector<Robot> getRobots(vector<string> ids);
 
         public:
         cleaningSystem();
-        list<string> queryRobotStatus(list<string> listRobots);
-        list<string> queryRoomStatus(list<string> listRooms);
-        void clean(Room room,list<string> listRobots);
+        vector<string> queryRobotStatus(vector<string> listRobots);
+        vector<string> queryRoomStatus(vector<string> listRooms);
+        void clean(Room room,vector<string> listRobots);
         void repair(string robot);
         void recharge(string robot);
+        
         
 
     };
