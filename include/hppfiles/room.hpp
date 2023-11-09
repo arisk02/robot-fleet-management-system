@@ -21,10 +21,10 @@ public:
     Room(); // Default constructor
     Room(Size newSize, bool newClean); // Constructor
 
-    Size getSize();
-    void setSize(Size newSize);
-    void setClean(bool newClean);
-    bool getClean();
+    inline Size getSize() const{return size;}
+    inline void setSize(Size newSize) {size = newSize;}
+    inline void setClean(bool newClean) {clean = newClean;}
+    inline bool getClean() {return clean;}
 };
 
 #endif

@@ -4,24 +4,28 @@
 #include <string>
 #include "robot.hpp"
 #include "room.hpp"
+#include "mopper.hpp"
+#include "scrubber.hpp"
+#include "vacuum.hpp"
 
 using namespace std;
-namespace system
+namespace cleaningSystem
 {
-    class system {
+    class cleaningSystem {
         private:
-        std::list<Robot::Robot> *robots;
-        std::list<Room::Room> *rooms;
-        list<Robot::Robot> getRobots(list<string> ids);
+        std::list<Robot> *robots;
+        std::list<Room> *rooms;
+        list<Robot> getRobots(list<string> ids);
 
         public:
+        cleaningSystem();
         list<string> queryRobotStatus(list<string> listRobots);
         list<string> queryRoomStatus(list<string> listRooms);
-        void clean(Room::Room room,list<string> listRobots);
+        void clean(Room room,list<string> listRobots);
         void repair(string robot);
         void recharge(string robot);
         
 
-    }
+    };
 }
 #endif

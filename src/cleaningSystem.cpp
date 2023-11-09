@@ -1,18 +1,30 @@
-#include "hppfiles/system.hpp"
+#include "hppfiles/cleaningSystem.hpp"
 
-
-system::system() : {
-    &rooms.push_back(Roon:Roon(Size::Medium, true));
-    &robots.push_back(Mopper::Mopper(RobotSize::SMALL, int 1));
-    &robots.push_back(Mopper::Mopper(RobotSize::MEDIUM, int 2));
-    &robots.push_back(Mopper::Mopper(RobotSize::LARGE, int 3));
-    &robots.push_back(Scrubber::Scrubber(RobotSize::SMALL, int 4));
-    &robots.push_back(Scrubber::Scrubber(RobotSize::LARGE, int 5));
-    &robots.push_back(Vacuum::Vacuum(RobotSize::LARGE, int 6));
-    &robots.push_back(Vacuum::Vacuum(RobotSize::MEDIUM, int 7));
+namespace cleaningSystem {
+cleaningSystem::cleaningSystem() { 
+    rooms->push_back(Room(Room::Size::medium, true));
+    robots->push_back(Mopper(RobotSize::SMALL, 1));
+    robots->push_back(Mopper(RobotSize::MEDIUM, 2));
+    robots->push_back(Mopper(RobotSize::LARGE, 3));
+    robots->push_back(Scrubber(RobotSize::SMALL, 4));
+    robots->push_back(Scrubber(RobotSize::LARGE, 5));
+    robots->push_back(Vacuum(RobotSize::LARGE, 6));
+    robots->push_back(Vacuum(RobotSize::MEDIUM, 7));
 }
-list<string> queryRobotStatus(list<Robot::Robot> listRobotStrings){
-    std::list<Robot::Robot> robotsList = getRobots(listRobotStrings);
+list<Robot> getRobots(list<string> ids){
+    std::list<Robot::Robot> *selectedRobots;
+    auto bots = robots.begin();
+    for (string name : ids){
+        for (int i = 0, i<list::size(robots),i++){
+            if (std::advance(bots, i).getRobotId() == name){
+                selectedRobots.push_back(std::advance(bots, i));
+            }
+        }
+    }
+    return selectedRobots;
+}
+list<string> queryRobotStatus(list<Robot> listRobotStrings){
+    std::list<Robot> robotsList = getRobots(listRobotStrings);
     std::list<std::string> statusList;
     auto bots = robotsList.begin();
     for (int i=0, i<list::size(robotsList),i++){
@@ -31,8 +43,9 @@ list<string> queryRobotStatus(list<Robot::Robot> listRobotStrings){
     }
     return statusList;
 }
+
 list<string> queryRoomStatus(list<string> listRooms){
-    std::list<Room::Room> selectedRooms;
+    std::list<Room> selectedRooms;
     auto allrooms = rooms.begin();
     for (string name : listRooms) {
         for (int i=0, i<list::size(rooms),i++){
@@ -74,15 +87,5 @@ void repair(string robot){
 void recharge(string robot){
     return
 }
-list<Robot::Robot> getRobots(list<string> ids){
-    std::list<Robot::Robot> *selectedRobots;
-    auto bots = robots.begin();
-    for (string name : ids){
-        for (int i = 0, i<list::size(robots),i++){
-            if (std::advance(bots, i).getRobotId() == name){
-                selectedRobots.push_back(std::advance(bots, i));
-            }
-        }
-    }
-    return selectedRobots;
+
 }
