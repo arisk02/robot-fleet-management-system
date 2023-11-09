@@ -1,4 +1,5 @@
 #include "hppfiles/robot.hpp"
+#include <iostream>
 
 Robot::Robot(RobotType robotType, RobotSize robotSize, int robotId)
     : type(robotType), size(robotSize), batteryLevel(100), robotId(robotId), 
@@ -14,18 +15,9 @@ Robot::Robot(RobotType robotType, RobotSize robotSize, int robotId)
         }
     }
 
-//Robot::~Robot() {}
+Robot::~Robot() {}
 
-//copy constructor
-Robot::Robot(const Robot& bot) : type(bot.type), size(bot.size), batteryLevel(bot.batteryLevel), robotId(bot.robotId), status(bot.status), cleanTime(bot.cleanTime), lastUsed(bot.lastUsed) {
-}
-
-//move constructor
-Robot::Robot(Robot&& bot) : type(bot.type), size(bot.size), batteryLevel(bot.batteryLevel), robotId(bot.robotId), status(bot.status), cleanTime(bot.cleanTime), lastUsed(bot.lastUsed) {
-    bot.batteryLevel = NULL;
-    bot.cleanTime = NULL;
-    bot.lastUsed = NULL;
-}
+void Robot::performTask() {}
 
 void Robot::setBatteryLevel(int newBatteryLevel)
 {
