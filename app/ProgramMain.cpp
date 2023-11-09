@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fmt/core.h>
 #include "../src/cleaningSystem.cpp"
+
 
 using namespace std;
 using namespace cleaningSys;
@@ -13,15 +15,15 @@ int main() {
     // }
 
     cleaningSystem newCleaningSystem;
-    cout << "Welcome to your Robot Fleet Management System!" << endl;
+    fmt::print("Welcome to your Robot Fleet Management System!");
     while (true) {
-        cout << "Main:" << endl;
-        cout << "1. See Robot Status" << endl;
-        cout << "2. See Room Status" << endl;
-        cout << "3. Quit" << endl;
+        fmt::print("Main:\n");
+        fmt::print("1. See Robot Status\n");
+        fmt::print("2. See Room Status\n");
+        fmt::print("3. Quit\n");
 
         int choice; //potential bug: if user enters a non-integer, the program will crash
-        cout << "Enter your choice: ";
+        fmt::print("Enter your choice: ");
         cin >> choice;
 
         if (choice == 1) {
@@ -32,10 +34,10 @@ int main() {
             auto status = newCleaningSystem.queryRobotStatus(robots); //might need an input
             int itemPerRobot = 3;
             for (int i = 0; i < status.size(); i += itemPerRobot) {
-                cout << "Robot " << status[i] << " is " << status[i + 1] << " and is at the battery level" << status[i + 2] << endl;
+                fmt::print("Robot {} is {} and is at the battery level {}\n", status[i], status[i + 1], status[i + 2]);
             }
 
-            cout << "Type anything to return to the main menu: ";
+            fmt::print("Type anything to return to the main menu: ");
             string val;
             cin >> val;
 
@@ -45,18 +47,18 @@ int main() {
             auto status = newCleaningSystem.queryRoomStatus(rooms);
             int itemPerRoom = 3;
             for (int i = 0; i < status.size(); i += itemPerRoom) {
-                cout << "Room " << status[i] << " is " << status[i + 1] << " and is " << status[i + 2] << endl;
+                fmt::print("Room {} is {} and is {}\n", status[i], status[i + 1], status[i + 2]);
             }
 
-            cout << "Type anything to return to the main menu: ";
+            fmt::print("Type anything to return to the main menu: ");
             string val;
             cin >> val;
 
         } else if (choice == 3) {
-            cout << "Goodbye!" << endl;
+            fmt::print("Goodbye!\n");
             break;
         } else {
-            cout << "Invalid choice. Please enter 1, 2, or 3." << endl;
+            fmt::print("Invalid choice. Please enter 1, 2, or 3.");
         }
     }
 
