@@ -1,0 +1,11 @@
+# Nov. 9 Sprint Review
+
+## Ethan:
+- built out cleaningSystem (formerly sytem) class and implemented the queryRobotStatus and queryRoomStatus functions
+- updated the CMake file
+- worked on fixing numerous bugs to make the code compile
+- reconfigured cleaningSystem to use vectors instead of list objects to store rooms and robots
+
+## Bereket
+- created the main file
+- updated room class
