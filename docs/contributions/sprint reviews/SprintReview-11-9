@@ -15,6 +15,10 @@
 - added extra Cleaning feature to the Main in the prototype branch
 - worked on cleaning out the bugs as well as making code consistent across all files
 
+## Caitlin
+ - Researched CMake for the CMake file
+ - Convert iostream to fmt for enhancement
+
 
 
 
