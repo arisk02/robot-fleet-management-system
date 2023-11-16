@@ -1,8 +1,8 @@
 # 11/16/23 Standup Contributions
 
 ## Bereket
-- Updated room to dynamically select the type of cleaning required
-- Updated the command line interface to support the added features like rechange and repair
+- Updated room to dynamically select the type of cleaning required (room class branch)
+- Updated the command line interface to support the added features like rechange and repair (update-main branch)
 
 ## Ethan
 - Researched concurrency in c++, specificanlly the async function.
