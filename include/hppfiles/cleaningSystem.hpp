@@ -13,12 +13,13 @@ namespace cleaningSys
 {
     class cleaningSystem {
         private:
-        std::vector<Robot> robots;
+        std::vector<Robot*> robots;
         std::vector<Room> rooms;
-        vector<Robot> getRobots(vector<int> ids);
+        vector<Robot*> getRobots(vector<int> ids);
 
         public:
         cleaningSystem();
+        ~cleaningSystem();
         vector<string> queryRobotStatus(vector<int> listRobots);
         vector<string> queryRoomStatus(vector<int> listRooms);
         void clean(int room,vector<int> listRobots);

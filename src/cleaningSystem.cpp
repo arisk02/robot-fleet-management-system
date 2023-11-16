@@ -6,19 +6,25 @@ namespace cleaningSys {
 
     cleaningSystem::cleaningSystem() { 
         rooms.push_back(Room(Room::Size::medium, true, 1));
-        robots.push_back(Mopper(RobotSize::SMALL, 1));
-        robots.push_back(Mopper(RobotSize::MEDIUM, 2));
-        robots.push_back(Mopper(RobotSize::LARGE, 3));
-        robots.push_back(Scrubber(RobotSize::SMALL, 4));
-        robots.push_back(Scrubber(RobotSize::LARGE, 5));
-        robots.push_back(Vacuum(RobotSize::LARGE, 6));
-        robots.push_back(Vacuum(RobotSize::MEDIUM, 7));
+        robots.push_back(new Mopper(RobotSize::LARGE, 2));
+        robots.push_back(new Mopper(RobotSize::MEDIUM, 3));
+        robots.push_back(new Mopper(RobotSize::SMALL, 4));
+        robots.push_back(new Vacuum(RobotSize::MEDIUM, 5));
+        robots.push_back(new Scrubber(RobotSize::MEDIUM, 6));
+        robots.push_back(new Mopper(RobotSize::MEDIUM, 7));
     }
-    vector<Robot> cleaningSystem::getRobots(vector<int> ids){
-        std::vector<Robot> selectedRobots;
+
+    cleaningSystem::~cleaningSystem() {
+        for(auto&& robot : robots){
+            delete robot;
+        }
+    }
+
+    vector<Robot*> cleaningSystem::getRobots(vector<int> ids){
+        std::vector<Robot*> selectedRobots;
         for (int id : ids){
             for (int i = 0; i < robots.size(); i++){
-                if (robots.at(i).getRobotId() == id){
+                if (robots.at(i)->getRobotId() == id){
                     selectedRobots.push_back(robots.at(i));
                 }
             }
@@ -26,11 +32,11 @@ namespace cleaningSys {
         return selectedRobots;
     }
     vector<string> cleaningSystem::queryRobotStatus(vector<int> listRobotints){
-        std::vector<Robot> robotsList = getRobots(listRobotints);
+        std::vector<Robot*> robotsList = getRobots(listRobotints);
         std::vector<string> statusList;
         for (int i=0; i<robotsList.size(); i++){
-            statusList.push_back(std::to_string(robotsList.at(i).getRobotId()));
-            RobotStatus temp = robotsList.at(i).getRobotStatus();
+            statusList.push_back(std::to_string(robotsList.at(i)->getRobotId()));
+            RobotStatus temp = robotsList.at(i)->getRobotStatus();
             if(temp==RobotStatus::CLEANING){
                 statusList.push_back("Cleaning");
             }
@@ -40,7 +46,7 @@ namespace cleaningSys {
             else {
                 statusList.push_back("Availible");
             }
-            statusList.push_back(std::to_string(robotsList.at(i).getRobotBatteryLevel()));
+            statusList.push_back(std::to_string(robotsList.at(i)->getRobotBatteryLevel()));
         }
         return statusList;
     }
@@ -90,11 +96,11 @@ namespace cleaningSys {
             }
         }
         for(int id : listRobots){
-            for(Robot& robot : robots){
-                if(robot.getRobotId() == id) {
-                    robot.setLastUsed(time(0));
-                    robot.setRobotStatus(RobotStatus::CLEANING);
-                    robot.performTask();
+            for(Robot* robot : robots){
+                if(robot->getRobotId() == id) {
+                    robot->setLastUsed(time(0));
+                    robot->setRobotStatus(RobotStatus::CLEANING);
+                    robot->performTask();
                 }
             }
         }
