@@ -29,8 +29,8 @@ namespace cleaningSys
         vector<string> queryRobotStatus(vector<int> listRobots);
         vector<string> queryRoomStatus(vector<int> listRooms);
         void clean(int room,vector<int> listRobots);
-        void repair(string robot);
-        void recharge(string robot);
+        void repair(int robot);
+        void recharge(int robot);
         
         
 

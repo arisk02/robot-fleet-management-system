@@ -90,14 +90,31 @@ int main() {
                 //TODO: logic to handle bad input
                 break;
             }
+            vector<int> vec;
+            vec.push_back(robotId); // turn this to for loop for multiple ids
+            vector<Robot*> bots = newCleaningSystem.getRobots(vec);
                 while(true) {
                     fmt::print("Please select a command:\n");
                     fmt::print("1. Charge robot\n");
-                    fmt::print("2. Repaire robot\n");
+                    fmt::print("2. Repair robot\n");
                     
                     int choice;
                     cin >> choice;
-                    
+                    if (choice == 1) {
+                        for (auto robot: bots) {
+                            robot.chargeRobot();
+                        }
+                        fmt::print("Successfully recharged robot. Returning to main menu.\n");
+                    }
+                    else if (choice == 2) {
+                       for (auto robot: bots) {
+                            robot.fixRobot();
+                        }
+                        fmt::print("Successfully repaired robot. Returning to main menu. \n");
+                    }
+                    else {
+                        fmt::print("Bad input.\n");
+                    }
                 }
         } else if (choice == 5) {
             fmt::print("Goodbye!\n");
