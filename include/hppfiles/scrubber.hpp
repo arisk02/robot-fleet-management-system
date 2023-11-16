@@ -6,7 +6,7 @@
 class Scrubber : public Robot {
 public:
     Scrubber(RobotSize robotSize, int robotId);
-    //void performTask() const override;
+    void performTask() override;
 };
 
 #endif

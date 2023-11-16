@@ -45,7 +45,7 @@ int main() {
             vector<int> rooms;
             rooms.push_back(1);
             auto status = newCleaningSystem.queryRoomStatus(rooms);
-            int itemPerRoom = 3;
+            int itemPerRoom = 4;
             for (int i = 0; i < status.size(); i += itemPerRoom) {
                 fmt::print("Room {} is {} and is {}\n", status[i], status[i + 1], status[i + 2]);
             }
@@ -55,6 +55,32 @@ int main() {
             cin >> val;
 
         } else if (choice == 3) {
+            int roomid; //potential bug: if user enters a non-integer, the program will crash
+            cout << "Enter the id of the room you want to clean: ";
+            cin >> roomid;
+
+            vector<int> robots;
+
+            while(true){
+                int robotsids; //potential bug: if user enters a non-integer, the program will crash
+                fmt::print("Enter the id of the robot you want to assign: ");
+                cin >> robotsids;
+                robots.push_back(robotsids);
+                int st; //potential bug: if user enters a non-integer, the program will crash
+                fmt::print("If you want to assign more robots, enter 1, otherwise 0: ");
+                cin >> st;
+                if (st == 0){
+                    break;
+                }
+            }
+
+            newCleaningSystem.clean(roomid, robots);
+            
+            fmt::print("Type anything to return to the main menu: ");
+            string val;
+            cin >> val;
+
+        } else if (choice == 4) {
             fmt::print("Goodbye!\n");
             break;
         } else {

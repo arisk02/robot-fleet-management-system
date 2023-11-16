@@ -5,7 +5,8 @@
 #include "mopper.hpp"
 #include "scrubber.hpp"
 #include <string>
-#include "vacuum.hpp"
+#include "vacuum.hpp" 
+#include <vector>
 
 using namespace std;
 namespace cleaningSys
@@ -20,7 +21,7 @@ namespace cleaningSys
         cleaningSystem();
         vector<string> queryRobotStatus(vector<int> listRobots);
         vector<string> queryRoomStatus(vector<int> listRooms);
-        void clean(Room room,vector<int> listRobots);
+        void clean(int room,vector<int> listRobots);
         void repair(string robot);
         void recharge(string robot);
         
