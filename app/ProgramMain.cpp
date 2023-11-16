@@ -20,7 +20,8 @@ int main() {
         fmt::print("Main:\n");
         fmt::print("1. See Robot Status\n");
         fmt::print("2. See Room Status\n");
-        fmt::print("3. Quit\n");
+        fmt::print("3. Clean Room\n");
+        fmt::print("4. Quit\n");
 
         int choice; //potential bug: if user enters a non-integer, the program will crash
         fmt::print("Enter your choice: ");
