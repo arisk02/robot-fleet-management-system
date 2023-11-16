@@ -13,3 +13,9 @@
 - Implemented chargeRobot function
 
 ## Aris
+- Fixed virtual class and subclass issues
+  - changed vector<Robot> to vector<Robot*> in header and all functions
+  - dynamically allocated Robots
+- Created a cleaningSystem constructor that takes in parameters for a custom fleet and building size
+- Reviewed implementation of fixRobot and chargeRobot and discussed with the team on how to integrate this with programMain
+- Researched and raised questions on how our robots and rooms are stored, advised on changing vector storage to dictionary storage for better runtime on large fleets
