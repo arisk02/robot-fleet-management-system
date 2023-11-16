@@ -38,3 +38,13 @@ void Robot::setLastUsed(time_t newLastUsed)
 {
     lastUsed = newLastUsed;
 }
+
+void Robot::chargeRobot()
+{
+    setBatteryLevel(maxBattery);   
+}
+
+void Robot::fixRobot()
+{
+    setRobotStatus(RobotStatus::AVAILABLE);
+}
