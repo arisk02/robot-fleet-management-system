@@ -14,6 +14,12 @@ namespace cleaningSys {
         robots.push_back(new Mopper(RobotSize::MEDIUM, 7));
     }
 
+    cleaningSystem::~cleaningSystem() {
+        for(auto&& robot : robots){
+            delete robot;
+        }
+    }
+
     vector<Robot*> cleaningSystem::getRobots(vector<int> ids){
         std::vector<Robot*> selectedRobots;
         for (int id : ids){

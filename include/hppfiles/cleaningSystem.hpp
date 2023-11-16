@@ -19,6 +19,7 @@ namespace cleaningSys
 
         public:
         cleaningSystem();
+        ~cleaningSystem();
         vector<string> queryRobotStatus(vector<int> listRobots);
         vector<string> queryRoomStatus(vector<int> listRooms);
         void clean(int room,vector<int> listRobots);
