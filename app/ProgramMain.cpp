@@ -105,12 +105,14 @@ int main() {
                             robot.chargeRobot();
                         }
                         fmt::print("Successfully recharged robot. Returning to main menu.\n");
+                        break;
                     }
                     else if (choice == 2) {
                        for (auto robot: bots) {
                             robot.fixRobot();
                         }
                         fmt::print("Successfully repaired robot. Returning to main menu. \n");
+                        break;
                     }
                     else {
                         fmt::print("Bad input.\n");
