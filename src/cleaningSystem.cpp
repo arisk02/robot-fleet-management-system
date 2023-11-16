@@ -14,6 +14,73 @@ namespace cleaningSys {
         robots.push_back(new Mopper(RobotSize::MEDIUM, 7));
     }
 
+    cleaningSystem::cleaningSystem( int smallScrubbers, int mediumScrubbers, int largeScrubbers,
+                                    int smallVacuums, int mediumVacuums, int largeVacuums,
+                                    int smallMoppers, int mediumMoppers, int largeMoppers,
+                                    int smallRooms, int mediumRooms, int largeRooms){
+
+        for(int i = 0; i < smallScrubbers; i++){
+            robots.push_back(new Scrubber(RobotSize::SMALL, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < mediumScrubbers; i++){
+            robots.push_back(new Scrubber(RobotSize::MEDIUM, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < largeScrubbers; i++){
+            robots.push_back(new Scrubber(RobotSize::LARGE, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < smallVacuums; i++){
+            robots.push_back(new Vacuum(RobotSize::SMALL, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < mediumVacuums; i++){
+            robots.push_back(new Vacuum(RobotSize::MEDIUM, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < largeVacuums; i++){
+            robots.push_back(new Vacuum(RobotSize::LARGE, robotCounter));
+            robotCounter++;
+        }
+        
+        for(int i = 0; i < smallMoppers; i++){
+            robots.push_back(new Mopper(RobotSize::SMALL, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < mediumMoppers; i++){
+            robots.push_back(new Mopper(RobotSize::MEDIUM, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < largeMoppers; i++){
+            robots.push_back(new Mopper(RobotSize::LARGE, robotCounter));
+            robotCounter++;
+        }
+
+        for(int i = 0; i < smallRooms; i++){
+            rooms.push_back(Room(Room::Size::small, true, roomCounter));
+            roomCounter++;
+        }
+
+        for(int i = 0; i < mediumRooms; i++){
+            rooms.push_back(Room(Room::Size::medium, true, roomCounter));
+            roomCounter++;
+        }
+
+        for(int i = 0; i < largeRooms; i++){
+            rooms.push_back(Room(Room::Size::large, true, roomCounter));
+            roomCounter++;
+        }
+        
+    }
+
     cleaningSystem::~cleaningSystem() {
         for(auto&& robot : robots){
             delete robot;
