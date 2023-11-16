@@ -1,27 +1,34 @@
 @startuml
-User -> System : Clean command
+User -> System : Clean command (list of robot ids and room)
 System -> Room : Request room size and status
 Room -> System : Supply room size and status
 alt Room status is being cleaned 
     System -> User : Error message (cleaning in progress)
 else Room status is dirty or clean
+    loop For each robot
     System -> Robot : Request robot status\nand cleaning time 
     Robot -> System : Supply robot status\nand cleaning time
-    alt Robot is broken or already occupied #Green
+    alt Robot is broken or already occupied
         System -> User : Error message (robot occupied or broken)
-    else All robots ready to be cleaned
-        activate System #LightBlue
+    else
+        System -> System : Add robot cleaning time to vector
         System -> Robot : Change status to busy
-        System -> Room : Change status to cleaning in progress
-        System -> System : Simulate cleaning
-        alt Successful Cleaning
-            System -> Room : Update status to clean
-            System -> Robot : Update status to ready
-        else Robot failure
-            System -> Room : Update status to not clean
-            System -> Robot : Update status to broken
-        end
-        deactivate System
+    end
+    end
+    System -> Room : Change status to cleaning in progress
+    System -> System : Launch async thread
+    loop while time<max cleaning time
+        activate System #LightBlue
+        System -> System : check if robot has broken\n(break odds times # of robots left cleaning)
+        System -> System : sleep 1 second
+    end
+    deactivate System
+    alt Successful Cleaning
+        System -> Room : Update status to clean
+        System -> Robot : Update status to ready
+    else Robot failure
+        System -> Room : Update status to not clean
+        System -> Robot : Update status to broken
     end
 end
 
