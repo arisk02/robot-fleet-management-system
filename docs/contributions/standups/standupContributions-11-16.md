@@ -7,5 +7,7 @@
 - Updated sequence diagram for clean_room function with refined plan for that function given better knowledge on concurrency. I now have a plan for how I will be implementing the function with async
 
 ## Caitlin
+- Implemented fixRobot function
+- Implemented chargeRobot function
 
 ## Aris
