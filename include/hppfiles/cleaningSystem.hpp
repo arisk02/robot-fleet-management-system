@@ -13,9 +13,9 @@ namespace cleaningSys
 {
     class cleaningSystem {
         private:
-        std::vector<Robot> robots;
+        std::vector<Robot*> robots;
         std::vector<Room> rooms;
-        vector<Robot> getRobots(vector<int> ids);
+        vector<Robot*> getRobots(vector<int> ids);
 
         public:
         cleaningSystem();
