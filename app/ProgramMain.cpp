@@ -83,9 +83,9 @@ int main() {
             cin >> val;
 
         } else if (choice == 4) {
+            int robotId; //potential bug: if user enters a non-integer, the program will crash
             while(true) {//having a function that returns robot count would be nice here
                 fmt::print("Please enter the id of the robot: \n");
-                int robotId; //potential bug: if user enters a non-integer, the program will crash
                 cin >> robotId;
                 //TODO: logic to handle bad input
                 break;
