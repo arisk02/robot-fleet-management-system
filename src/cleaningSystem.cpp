@@ -157,11 +157,8 @@ namespace cleaningSys {
         return statusList;
     }
     void cleaningSystem::clean(int roomid,vector<int> listRobots){
-        for(Room& room : rooms){
-            if(room.getId() == roomid){
-                room.setOccupiedByRobot(true);
-            }
-        }
+        std::unique_ptr<bool> roomOccupied = *rooms[roomid]->getOccupiedByRobot();
+        if (*roomOccupied)
         for(int id : listRobots){
             for(Robot* robot : robots){
                 if(robot->getRobotId() == id) {
