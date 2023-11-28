@@ -84,40 +84,38 @@ int main() {
 
         } else if (choice == 4) {
             int robotId; //potential bug: if user enters a non-integer, the program will crash
-            while(true) {//having a function that returns robot count would be nice here
-                fmt::print("Please enter the id of the robot: \n");
-                cin >> robotId;
-                //TODO: logic to handle bad input
-                break;
-            }
             vector<int> vec;
-            vec.push_back(robotId); // turn this to for loop for multiple ids
-            vector<Robot*> bots = newCleaningSystem.getRobots(vec);
-                while(true) {
-                    fmt::print("Please select a command:\n");
-                    fmt::print("1. Charge robot\n");
-                    fmt::print("2. Repair robot\n");
-                    
-                    int choice;
-                    cin >> choice;
-                    if (choice == 1) {
-                        for (auto robot: bots) {
-                            robot.chargeRobot();
-                        }
-                        fmt::print("Successfully recharged robot. Returning to main menu.\n");
-                        break;
-                    }
-                    else if (choice == 2) {
-                       for (auto robot: bots) {
-                            robot.fixRobot();
-                        }
-                        fmt::print("Successfully repaired robot. Returning to main menu. \n");
-                        break;
-                    }
-                    else {
-                        fmt::print("Bad input.\n");
-                    }
+
+            while(true) {//having a function that returns robot count would be nice here
+                fmt::print("Please enter the id of a robot. Enter -1 when finished: \n");
+                cin >> robotId;
+                if (robotId < 0) {
+                    break;
                 }
+                vec.push_back(robotId);
+                //TODO: logic to handle bad input
+            }
+            while(true) {
+                fmt::print("Please select a command:\n");
+                fmt::print("1. Charge robot\n");
+                fmt::print("2. Repair robot\n");
+                    
+                int choice;
+                cin >> choice;
+                if (choice == 1) {
+                    newCleaningSystem.recharge(vec);
+                    fmt::print("Successfully recharged robot. Returning to main menu.\n");
+                    break;
+                }
+                else if (choice == 2) {
+                    newCleaningSystem.repair(vec);
+                    fmt::print("Successfully repaired robot. Returning to main menu. \n");
+                    break;
+                }
+                else {
+                        fmt::print("Bad input.\n");
+                }
+            }
         } else if (choice == 5) {
             fmt::print("Goodbye!\n");
             break;
