@@ -32,6 +32,8 @@ class Robot
         void setRobotStatus(RobotStatus newStatus);     // sets robot status
         void setBatteryLevel(int newBatteryLevel);      // charges robot
         void setLastUsed(time_t newLastUsed);           // sets the last time used
+        void fixRobot();
+        void chargeRobot();
 
     protected:
         const int robotId;

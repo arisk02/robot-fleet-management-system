@@ -173,10 +173,15 @@ namespace cleaningSys {
         }
     }
     void cleaningSystem::repair(int robot){
-        
+        vector<Robot*> bots = getRobots(botIds);
+        for (auto robot: bots) {
+            robot.chargeRobot();
+        }   
     }
     void cleaningSystem::recharge(int robot){
-        
+      vector<Robot*> bots = getRobots(botIds);
+        for (auto robot: bots) {
+            robot.fixRobot();
+        }
     }
-
 }
