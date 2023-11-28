@@ -5,13 +5,13 @@ namespace cleaningSys {
 
 
     cleaningSystem::cleaningSystem() { 
-        rooms.push_back(Room(Room::Size::medium, true, 1));
-        robots.push_back(new Mopper(RobotSize::LARGE, 2));
-        robots.push_back(new Mopper(RobotSize::MEDIUM, 3));
-        robots.push_back(new Mopper(RobotSize::SMALL, 4));
-        robots.push_back(new Vacuum(RobotSize::MEDIUM, 5));
-        robots.push_back(new Scrubber(RobotSize::MEDIUM, 6));
-        robots.push_back(new Mopper(RobotSize::MEDIUM, 7));
+        rooms[1] = (Room(Room::Size::medium, true, 1));
+        robots[2] = (new Mopper(RobotSize::LARGE, 2));
+        robots[3] = (new Mopper(RobotSize::MEDIUM, 3));
+        robots[4] = (new Mopper(RobotSize::SMALL, 4));
+        robots[5] = (new Vacuum(RobotSize::MEDIUM, 5));
+        robots[6] = (new Scrubber(RobotSize::MEDIUM, 6));
+        robots[7] = (new Mopper(RobotSize::MEDIUM, 7));
     }
 
     cleaningSystem::cleaningSystem( int smallScrubbers, int mediumScrubbers, int largeScrubbers,
@@ -20,84 +20,82 @@ namespace cleaningSys {
                                     int smallRooms, int mediumRooms, int largeRooms){
 
         for(int i = 0; i < smallScrubbers; i++){
-            robots.push_back(new Scrubber(RobotSize::SMALL, robotCounter));
+            robots[robotCounter] = (new Scrubber(RobotSize::SMALL, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < mediumScrubbers; i++){
-            robots.push_back(new Scrubber(RobotSize::MEDIUM, robotCounter));
+            robots[robotCounter] = (new Scrubber(RobotSize::MEDIUM, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < largeScrubbers; i++){
-            robots.push_back(new Scrubber(RobotSize::LARGE, robotCounter));
+            robots[robotCounter] = (new Scrubber(RobotSize::LARGE, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < smallVacuums; i++){
-            robots.push_back(new Vacuum(RobotSize::SMALL, robotCounter));
+            robots[robotCounter] = (new Vacuum(RobotSize::SMALL, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < mediumVacuums; i++){
-            robots.push_back(new Vacuum(RobotSize::MEDIUM, robotCounter));
+            robots[robotCounter] = (new Vacuum(RobotSize::MEDIUM, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < largeVacuums; i++){
-            robots.push_back(new Vacuum(RobotSize::LARGE, robotCounter));
+            robots[robotCounter] = (new Vacuum(RobotSize::LARGE, robotCounter));
             robotCounter++;
         }
         
         for(int i = 0; i < smallMoppers; i++){
-            robots.push_back(new Mopper(RobotSize::SMALL, robotCounter));
+            robots[robotCounter] = (new Mopper(RobotSize::SMALL, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < mediumMoppers; i++){
-            robots.push_back(new Mopper(RobotSize::MEDIUM, robotCounter));
+            robots[robotCounter] = (new Mopper(RobotSize::MEDIUM, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < largeMoppers; i++){
-            robots.push_back(new Mopper(RobotSize::LARGE, robotCounter));
+            robots[robotCounter] = (new Mopper(RobotSize::LARGE, robotCounter));
             robotCounter++;
         }
 
         for(int i = 0; i < smallRooms; i++){
-            rooms.push_back(Room(Room::Size::small, true, roomCounter));
+            rooms[roomCounter] = (Room(Room::Size::small, true, roomCounter));
             roomCounter++;
         }
 
         for(int i = 0; i < mediumRooms; i++){
-            rooms.push_back(Room(Room::Size::medium, true, roomCounter));
+            rooms[roomCounter] = (Room(Room::Size::medium, true, roomCounter));
             roomCounter++;
         }
 
         for(int i = 0; i < largeRooms; i++){
-            rooms.push_back(Room(Room::Size::large, true, roomCounter));
+            rooms[roomCounter] = (Room(Room::Size::large, true, roomCounter));
             roomCounter++;
         }
         
     }
 
     cleaningSystem::~cleaningSystem() {
-        for(auto&& robot : robots){
-            delete robot;
+        while (robotCounter > -1) {
+            robotCounter--;
+            delete robots[robotCounter];
         }
     }
 
     vector<Robot*> cleaningSystem::getRobots(vector<int> ids){
         std::vector<Robot*> selectedRobots;
         for (int id : ids){
-            for (int i = 0; i < robots.size(); i++){
-                if (robots.at(i)->getRobotId() == id){
-                    selectedRobots.push_back(robots.at(i));
-                }
-            }
+            selectedRobots.push_back(robots[id]);
         }
         return selectedRobots;
     }
+
     vector<string> cleaningSystem::queryRobotStatus(vector<int> listRobotints){
         std::vector<Robot*> robotsList = getRobots(listRobotints);
         std::vector<string> statusList;
@@ -157,20 +155,6 @@ namespace cleaningSys {
         return statusList;
     }
     void cleaningSystem::clean(int roomid,vector<int> listRobots){
-        for(Room& room : rooms){
-            if(room.getId() == roomid){
-                room.setOccupiedByRobot(true);
-            }
-        }
-        for(int id : listRobots){
-            for(Robot* robot : robots){
-                if(robot->getRobotId() == id) {
-                    robot->setLastUsed(time(0));
-                    robot->setRobotStatus(RobotStatus::CLEANING);
-                    robot->performTask();
-                }
-            }
-        }
     }
     void cleaningSystem::repair(string robot){
         
