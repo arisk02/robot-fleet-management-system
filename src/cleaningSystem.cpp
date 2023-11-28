@@ -1,5 +1,8 @@
 #include "hppfiles/cleaningSystem.hpp"
 #include <iostream>
+#include <string>
+#include <fmt/core.h>
+#include<cstdlib>
 
 namespace cleaningSys {
 
@@ -157,17 +160,55 @@ namespace cleaningSys {
         return statusList;
     }
     void cleaningSystem::clean(int roomid,vector<int> listRobots){
-        std::unique_ptr<bool> roomOccupied = *rooms[roomid]->getOccupiedByRobot();
-        if (*roomOccupied)
-        for(int id : listRobots){
-            for(Robot* robot : robots){
-                if(robot->getRobotId() == id) {
-                    robot->setLastUsed(time(0));
-                    robot->setRobotStatus(RobotStatus::CLEANING);
-                    robot->performTask();
+        std::unique_ptr<bool> roomOccupied (new bool (rooms[roomid]->getOccupiedByRobot()));
+        if (*roomOccupied){
+            fmt::print("Error: Room {} already occupied by Robots.\n", roomid);
+        }
+        else{
+            rooms[roomid]->setOccupiedByRobot(true);
+            int totalBotSize = 0;
+            for (int id : listRobots){
+                if (robots[id]->getRobotStatus()==RobotStatus::CLEANING || robots[id]->getRobotStatus()==RobotStatus::BROKEN)
+                {
+                    fmt::print("Error: Robot {} is unavailable.\n", id);
+                    return;
+                }
+                switch (robots[id]->getRobotSize()){
+                    case RobotSize::LARGE:
+                        totalBotSize += 30;
+                        break;
+                    case RobotSize::MEDIUM:
+                        totalBotSize += 20;
+                        break;
+                    case RobotSize::SMALL:
+                        totalBotSize += 10;
                 }
             }
+            int cleaningTime = 0;
+            switch (rooms[roomid]->getSize()){
+                case Room::Size::large:
+                    cleaningTime = 1500/totalBotSize;
+                    break;
+                case Room::Size::medium:
+                    cleaningTime = 1000/totalBotSize;
+                    break;
+                case Room::Size::small:
+                    cleaningTime = 500/totalBotSize;
+            }
+            for (int id : listRobots){
+                robots[id]->setRobotStatus(RobotStatus::CLEANING);
+            }
+
         }
+    }
+    void cleanAsync(vector<int> listRobots, int cleaningTime){
+        while (cleaningTime > 0)
+        {
+            for (int id : listRobots){
+
+            }
+        }
+        
     }
     void cleaningSystem::repair(string robot){
         
