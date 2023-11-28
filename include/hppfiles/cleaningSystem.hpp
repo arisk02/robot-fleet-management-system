@@ -31,9 +31,6 @@ namespace cleaningSys
         void clean(int room,vector<int> listRobots);
         void repair(vector<int> botIds);
         void recharge(vector<int> botIds);
-        
-        
-
     };
 }
 #endif
