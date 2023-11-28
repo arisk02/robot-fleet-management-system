@@ -172,10 +172,10 @@ namespace cleaningSys {
             }
         }
     }
-    void cleaningSystem::repair(string robot){
+    void cleaningSystem::repair(vector<Robot*> bots){
         
     }
-    void cleaningSystem::recharge(string robot){
+    void cleaningSystem::recharge(vector<Robot*> bots){
         
     }
 
