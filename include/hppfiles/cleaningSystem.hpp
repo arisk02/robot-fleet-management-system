@@ -8,6 +8,7 @@
 #include "vacuum.hpp" 
 #include <vector>
 #include <map>
+#include <future>
 
 using namespace std;
 namespace cleaningSys
@@ -17,6 +18,7 @@ namespace cleaningSys
         std::map<int, Robot*> robots;
         std::map<int, Room> rooms;
         vector<Robot*> getRobots(vector<int> ids);
+        vector<future<void>> futures;
         int roomCounter = 0;
         int robotCounter = 0;
 
@@ -30,6 +32,7 @@ namespace cleaningSys
         vector<string> queryRobotStatus(vector<int> listRobots);
         vector<string> queryRoomStatus(vector<int> listRooms);
         void clean(int room,vector<int> listRobots);
+        void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID);
         void repair(string robot);
         void recharge(string robot);
         
