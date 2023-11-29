@@ -7,14 +7,15 @@
 #include <string>
 #include "vacuum.hpp" 
 #include <vector>
+#include <map>
 
 using namespace std;
 namespace cleaningSys
 {
     class cleaningSystem {
         private:
-        std::vector<Robot*> robots;
-        std::vector<Room> rooms;
+        std::map<int, Robot*> robots;
+        std::map<int, Room> rooms;
         vector<Robot*> getRobots(vector<int> ids);
         int roomCounter = 0;
         int robotCounter = 0;
