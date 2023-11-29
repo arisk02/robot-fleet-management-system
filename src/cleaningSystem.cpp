@@ -1,5 +1,10 @@
 #include "hppfiles/cleaningSystem.hpp"
 #include <iostream>
+#include <string>
+#include <fmt/core.h>
+#include <cstdlib>
+#include <unistd.h>
+#include <future>
 
 namespace cleaningSys {
 
@@ -155,6 +160,70 @@ namespace cleaningSys {
         return statusList;
     }
     void cleaningSystem::clean(int roomid,vector<int> listRobots){
+        std::unique_ptr<bool> roomOccupied (new bool (rooms[roomid]->getOccupiedByRobot()));
+        if (*roomOccupied){
+            fmt::print("Error: Room {} already occupied by Robots.\n", roomid);
+        }
+        else{
+            rooms[roomid]->setOccupiedByRobot(true);
+            int totalBotSize = 0;
+            for (int id : listRobots){
+                if (robots[id]->getRobotStatus()==RobotStatus::CLEANING || robots[id]->getRobotStatus()==RobotStatus::BROKEN)
+                {
+                    fmt::print("Error: Robot {} is unavailable.\n", id);
+                    return;
+                }
+                switch (robots[id]->getRobotSize()){
+                    case RobotSize::LARGE:
+                        totalBotSize += 30;
+                        break;
+                    case RobotSize::MEDIUM:
+                        totalBotSize += 20;
+                        break;
+                    case RobotSize::SMALL:
+                        totalBotSize += 10;
+                }
+            }
+            int cleaningTime = 0;
+            switch (rooms[roomid]->getSize()){
+                case Room::Size::large:
+                    cleaningTime = 1500/totalBotSize;
+                    break;
+                case Room::Size::medium:
+                    cleaningTime = 1000/totalBotSize;
+                    break;
+                case Room::Size::small:
+                    cleaningTime = 500/totalBotSize;
+            }
+            for (int id : listRobots){
+                robots[id]->setRobotStatus(RobotStatus::CLEANING);
+            }
+            async(launch::async, cleanAsync, listRobots, cleaningTime, roomid);
+        }
+    }
+    void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID){
+        while (cleaningTime > 0)
+        {
+            srand((unsigned) time(NULL));
+            for (int id : listRobots){
+                int breakOdds = rand() % 500; //Change the mod integer here to alter the odds of a robot breaking every second during cleaning (for each robot). odds are 1 in {integer here}. ex. 1 in 500
+                if (breakOdds == 1){
+                    fmt::print("Robot {} has broken during the cleaning of room {}. The room will remain dirty until re-cleaned successfully.", id, roomID);
+                    for (int resetID : listRobots){
+                        robots[resetID]->setRobotStatus(RobotStatus::AVAILABLE);
+                    }
+                    robots[id]->setRobotStatus(RobotStatus::BROKEN);
+                    rooms[roomID]->setClean(false);
+                    return;
+                }
+            }
+            sleep(1);
+            cleaningTime -= 1;
+        }
+        for (int resetID : listRobots){
+            robots[resetID]->setRobotStatus(RobotStatus::AVAILABLE);
+        }
+        return;
     }
     void cleaningSystem::repair(string robot){
         
