@@ -206,7 +206,7 @@ namespace cleaningSys {
             for (int id : listRobots){
                 int breakOdds = rand() % 100; //Change the mod integer here to alter the odds of a robot breaking every second during cleaning (for each robot). odds are 1 in {integer here}. ex. 1 in 500
                 if (breakOdds == 1){
-                    fmt::print("Robot {} has broken during the cleaning of room {}. The room will remain dirty until re-cleaned successfully.\n", id, roomID);
+                    fmt::print("\nRobot {} has broken during the cleaning of room {}. The room will remain dirty until re-cleaned successfully.\n", id, roomID);
                     for (int resetID : listRobots){
                         robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
                     }
@@ -215,7 +215,7 @@ namespace cleaningSys {
                     return;
                 }
                 if (robots.at(id)->getRobotBatteryLevel()<1){
-                    fmt::print("Robot {} is out of battery. The room will remain dirty until re-cleaned successfully.\n", id);
+                    fmt::print("\nRobot {} is out of battery. The room will remain dirty until re-cleaned successfully.\n", id);
                     for (int resetID : listRobots){
                         robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
                     }
@@ -239,6 +239,8 @@ namespace cleaningSys {
         for (int resetID : listRobots){
             robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
         }
+        rooms.at(roomID).setClean(true);
+        rooms.at(roomID).setOccupiedByRobot(false);
         return;
     }
     void cleaningSystem::repair(string robot){
