@@ -2,7 +2,9 @@
 #include <iostream>
 #include <string>
 #include <fmt/core.h>
-#include<cstdlib>
+#include <cstdlib>
+#include <unistd.h>
+#include <future>
 
 namespace cleaningSys {
 
@@ -198,17 +200,32 @@ namespace cleaningSys {
             for (int id : listRobots){
                 robots[id]->setRobotStatus(RobotStatus::CLEANING);
             }
-
+            async(launch::async, cleanAsync, listRobots, cleaningTime, roomid);
         }
     }
-    void cleanAsync(vector<int> listRobots, int cleaningTime){
+    void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID){
         while (cleaningTime > 0)
         {
+            srand((unsigned) time(NULL));
             for (int id : listRobots){
-
+                int breakOdds = rand() % 500; //Change the mod integer here to alter the odds of a robot breaking every second during cleaning (for each robot). odds are 1 in {integer here}. ex. 1 in 500
+                if (breakOdds == 1){
+                    fmt::print("Robot {} has broken during the cleaning of room {}. The room will remain dirty until re-cleaned successfully.", id, roomID);
+                    for (int resetID : listRobots){
+                        robots[resetID]->setRobotStatus(RobotStatus::AVAILABLE);
+                    }
+                    robots[id]->setRobotStatus(RobotStatus::BROKEN);
+                    rooms[roomID]->setClean(false);
+                    return;
+                }
             }
+            sleep(1);
+            cleaningTime -= 1;
         }
-        
+        for (int resetID : listRobots){
+            robots[resetID]->setRobotStatus(RobotStatus::AVAILABLE);
+        }
+        return;
     }
     void cleaningSystem::repair(string robot){
         
