@@ -247,11 +247,16 @@ namespace cleaningSys {
         rooms.at(roomID).setOccupiedByRobot(false);
         return;
     }
-    void cleaningSystem::repair(string robot){
-        
+    void cleaningSystem::repair(vector<int> botIds){
+        vector<Robot*> bots = getRobots(botIds);
+        for (auto robot: bots) {
+            robot->chargeRobot();
+        }   
     }
-    void cleaningSystem::recharge(string robot){
-        
+    void cleaningSystem::recharge(vector<int> botIds){
+      vector<Robot*> bots = getRobots(botIds);
+        for (auto robot: bots) {
+            robot->fixRobot();
+        }
     }
-
 }
