@@ -32,12 +32,9 @@ namespace cleaningSys
         vector<string> queryRobotStatus(vector<int> listRobots);
         vector<string> queryRoomStatus(vector<int> listRooms);
         void clean(int room,vector<int> listRobots);
+        void repair(vector<int> botIds);
+        void recharge(vector<int> botIds);
         void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID);
-        void repair(string robot);
-        void recharge(string robot);
-        
-        
-
     };
 }
 #endif
