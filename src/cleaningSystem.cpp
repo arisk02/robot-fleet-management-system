@@ -4,6 +4,7 @@
 #include <fmt/core.h>
 #include <cstdlib>
 #include <unistd.h>
+#include <chrono>
 
 namespace cleaningSys {
 
@@ -196,6 +197,12 @@ namespace cleaningSys {
             }
             for (int id : listRobots){
                 robots[id]->setRobotStatus(RobotStatus::CLEANING);
+            }
+            for (int i=0; i< futures.size();i++){
+                if (futures[i].wait_for(chrono::seconds(0))==future_status::ready){
+                    futures[i].get();
+                    futures.erase(futures.begin()+i);
+                }
             }
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
         }
