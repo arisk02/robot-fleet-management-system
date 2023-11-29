@@ -15,7 +15,7 @@ int main() {
     // }
 
     cleaningSystem newCleaningSystem;
-    fmt::print("Welcome to your Robot Fleet Management System!");
+    fmt::print("Welcome to your Robot Fleet Management System!\n");
     while (true) {
         fmt::print("Main:\n");
         fmt::print("1. See Robot Status\n");
@@ -87,7 +87,7 @@ int main() {
             vector<int> vec;
 
             while(true) {//having a function that returns robot count would be nice here
-                fmt::print("Please enter the id of a robot. Enter -1 when finished: \n");
+                fmt::print("Please enter the ids of the robots one at a time. Enter -1 if finished: \n");
                 cin >> robotId;
                 if (robotId < 0) {
                     break;
