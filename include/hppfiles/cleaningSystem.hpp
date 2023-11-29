@@ -7,15 +7,18 @@
 #include <string>
 #include "vacuum.hpp" 
 #include <vector>
+#include <map>
+#include <future>
 
 using namespace std;
 namespace cleaningSys
 {
     class cleaningSystem {
         private:
-        std::vector<Robot*> robots;
-        std::vector<Room> rooms;
+        std::map<int, Robot*> robots;
+        std::map<int, Room> rooms;
         vector<Robot*> getRobots(vector<int> ids);
+        vector<future<void>> futures;
         int roomCounter = 0;
         int robotCounter = 0;
 
@@ -31,6 +34,7 @@ namespace cleaningSys
         void clean(int room,vector<int> listRobots);
         void repair(vector<int> botIds);
         void recharge(vector<int> botIds);
+        void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID);
     };
 }
 #endif

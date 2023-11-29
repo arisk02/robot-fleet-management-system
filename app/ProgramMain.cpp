@@ -30,7 +30,7 @@ int main() {
 
         if (choice == 1) {
             vector<int> robots;
-            for (int i = 1; i < 8; i++){
+            for (int i = 1; i < 7; i++){
                 robots.push_back(i);
             }
             auto status = newCleaningSystem.queryRobotStatus(robots); 
