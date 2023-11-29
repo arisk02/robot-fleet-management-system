@@ -195,6 +195,7 @@ namespace cleaningSys {
                     futures.erase(futures.begin()+i);
                 }
             }
+            rooms[roomid].setClean(false);
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
         }
 
@@ -211,7 +212,7 @@ namespace cleaningSys {
                         robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
                     }
                     robots.at(id)->setRobotStatus(RobotStatus::BROKEN);
-                    rooms[roomID].setClean(false);
+                    rooms[roomID].setOccupiedByRobot(false);
                     return;
                 }
                 if (robots.at(id)->getRobotBatteryLevel()<1){
@@ -219,8 +220,10 @@ namespace cleaningSys {
                     for (int resetID : listRobots){
                         robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
                     }
+                    rooms[roomID].setOccupiedByRobot(false);
+                    return;
                 }
-                switch (robots.at(id)->getRobotSize())
+                switch (robots.at(id)->getRobotSize()) //switch to deplete robot battery by preset amounts
                 {
                 case RobotSize::LARGE:
                     robots.at(id)->setBatteryLevel(robots.at(id)->getRobotBatteryLevel() - 1);
@@ -232,6 +235,7 @@ namespace cleaningSys {
                     robots.at(id)->setBatteryLevel(robots.at(id)->getRobotBatteryLevel() - 4);
                     break;
                 }
+
             }
             sleep(1);
             cleaningTime -= 1;
