@@ -156,15 +156,14 @@ namespace cleaningSys {
             fmt::print("Error: Room {} already occupied by Robots.\n", roomid);
         }
         else{
-            rooms.at(roomid).setOccupiedByRobot(true);
             int totalBotSize = 0;
-            for (int id : listRobots){
+            for (int id : listRobots){//loop to add up total units/second cleaning ability for all robots in list
                 if (robots.at(id)->getRobotStatus()==RobotStatus::CLEANING || robots[id]->getRobotStatus()==RobotStatus::BROKEN)
                 {
                     fmt::print("Error: Robot {} is unavailable.\n", id);
                     return;
                 }
-                switch (robots.at(id)->getRobotSize()){
+                switch (robots.at(id)->getRobotSize()){//adds a robots ability to clean "units" of a room based on size.
                     case RobotSize::LARGE:
                         totalBotSize += 30;
                         break;
@@ -176,9 +175,9 @@ namespace cleaningSys {
                 }
             }
             int cleaningTime = 0;
-            switch (rooms[roomid].getSize()){
+            switch (rooms[roomid].getSize()){//this switch uses the total weights of the robots calculated above to find the cleaning time in seconds it will take to clean the room
                 case Room::Size::large:
-                    cleaningTime = 1500/totalBotSize;
+                    cleaningTime = 1500/totalBotSize; //the initial integer in this expression is the "size" of the room. It can be thought of in the way that robots can clean a certain number of units per second, and this is the total units in a room
                     break;
                 case Room::Size::medium:
                     cleaningTime = 1000/totalBotSize;
@@ -186,16 +185,17 @@ namespace cleaningSys {
                 case Room::Size::small:
                     cleaningTime = 500/totalBotSize;
             }
-            for (int id : listRobots){
+            for (int id : listRobots){//sets the status of all robots to cleaning
                 robots[id]->setRobotStatus(RobotStatus::CLEANING);
             }
-            for (int i=0; i< futures.size();i++){
+            for (int i=0; i< futures.size();i++){//this loop goes through each future in the futures list and invalidates it and erases it from the list in hopes of mitigating memory leaks
                 if (futures[i].wait_for(chrono::seconds(0))==future_status::ready){
                     futures[i].get();
                     futures.erase(futures.begin()+i);
                 }
             }
             rooms[roomid].setClean(false);
+            rooms.at(roomid).setOccupiedByRobot(true);
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
         }
 
@@ -205,17 +205,17 @@ namespace cleaningSys {
         {
             srand((unsigned) time(NULL));
             for (int id : listRobots){
-                int breakOdds = rand() % 100; //Change the mod integer here to alter the odds of a robot breaking every second during cleaning (for each robot). odds are 1 in {integer here}. ex. 1 in 500
+                int breakOdds = rand() % 500; //Change the mod integer here to alter the odds of a robot breaking every second during cleaning (for each robot). odds are 1 in {integer here}. ex. 1 in 500
                 if (breakOdds == 1){
                     fmt::print("\nRobot {} has broken during the cleaning of room {}. The room will remain dirty until re-cleaned successfully.\n", id, roomID);
-                    for (int resetID : listRobots){
+                    for (int resetID : listRobots){//sets all robots to availible after robot break event
                         robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
                     }
-                    robots.at(id)->setRobotStatus(RobotStatus::BROKEN);
+                    robots.at(id)->setRobotStatus(RobotStatus::BROKEN);//broken robot gets set to broken
                     rooms[roomID].setOccupiedByRobot(false);
                     return;
                 }
-                if (robots.at(id)->getRobotBatteryLevel()<1){
+                if (robots.at(id)->getRobotBatteryLevel()<1){//check for dead robot
                     fmt::print("\nRobot {} is out of battery. The room will remain dirty until re-cleaned successfully.\n", id);
                     for (int resetID : listRobots){
                         robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
@@ -240,7 +240,7 @@ namespace cleaningSys {
             sleep(1);
             cleaningTime -= 1;
         }
-        for (int resetID : listRobots){
+        for (int resetID : listRobots){//reset all robot status'
             robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
         }
         rooms.at(roomID).setClean(true);
