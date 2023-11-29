@@ -11,12 +11,12 @@ namespace cleaningSys {
 
     cleaningSystem::cleaningSystem() { 
         rooms[1] = (Room(Room::Size::medium, true, 1));
-        robots[2] = (new Mopper(RobotSize::LARGE, 2));
-        robots[3] = (new Mopper(RobotSize::MEDIUM, 3));
-        robots[4] = (new Mopper(RobotSize::SMALL, 4));
-        robots[5] = (new Vacuum(RobotSize::MEDIUM, 5));
-        robots[6] = (new Scrubber(RobotSize::MEDIUM, 6));
-        robots[7] = (new Mopper(RobotSize::MEDIUM, 7));
+        robots[1] = (new Mopper(RobotSize::LARGE, 2));
+        robots[2] = (new Mopper(RobotSize::MEDIUM, 3));
+        robots[3] = (new Mopper(RobotSize::SMALL, 4));
+        robots[4] = (new Vacuum(RobotSize::MEDIUM, 5));
+        robots[5] = (new Scrubber(RobotSize::MEDIUM, 6));
+        robots[6] = (new Mopper(RobotSize::MEDIUM, 7));
     }
 
     cleaningSystem::cleaningSystem( int smallScrubbers, int mediumScrubbers, int largeScrubbers,
@@ -102,11 +102,10 @@ namespace cleaningSys {
     }
 
     vector<string> cleaningSystem::queryRobotStatus(vector<int> listRobotints){
-        std::vector<Robot*> robotsList = getRobots(listRobotints);
         std::vector<string> statusList;
-        for (int i=0; i<robotsList.size(); i++){
-            statusList.push_back(std::to_string(robotsList.at(i)->getRobotId()));
-            RobotStatus temp = robotsList.at(i)->getRobotStatus();
+        for (int id : listRobotints){
+            statusList.push_back(std::to_string(id));
+            RobotStatus temp = robots.at(id)->getRobotStatus();
             if(temp==RobotStatus::CLEANING){
                 statusList.push_back("Cleaning");
             }
@@ -116,24 +115,16 @@ namespace cleaningSys {
             else {
                 statusList.push_back("Availible");
             }
-            statusList.push_back(std::to_string(robotsList.at(i)->getRobotBatteryLevel()));
+            statusList.push_back(std::to_string(robots.at(id)->getRobotBatteryLevel()));
         }
         return statusList;
     }
 
     vector<string> cleaningSystem::queryRoomStatus(vector<int> listRooms){
-        std::vector<Room> selectedRooms;
-        for (int name : listRooms) {
-            for (int i=0; i<rooms.size();i++){
-                if (rooms.at(i).getId() == name) {
-                    selectedRooms.push_back(rooms.at(i));
-                }
-            }
-        }
         std::vector<string> statusList;
-        for (int i=0; i<selectedRooms.size();i++){
-            statusList.push_back(to_string(selectedRooms.at(i).getId()));
-            Room::Size temp = selectedRooms.at(i).getSize();
+        for (int id : listRooms){
+            statusList.push_back(to_string(id));
+            Room::Size temp = rooms.at(id).getSize();
             if(temp==Room::Size::small){
                 statusList.push_back("small");
             }
@@ -143,13 +134,13 @@ namespace cleaningSys {
             else{
                 statusList.push_back("large");
             }
-            if (selectedRooms.at(i).getClean()){
+            if (rooms.at(id).getClean()){
                 statusList.push_back("Clean");
             }
             else {
                 statusList.push_back("Dirty");
             }
-            if (selectedRooms.at(i).getOccupiedByRobot()){
+            if (rooms.at(id).getOccupiedByRobot()){
                 statusList.push_back("occupied by robot");
             }
             else {
@@ -213,15 +204,33 @@ namespace cleaningSys {
         {
             srand((unsigned) time(NULL));
             for (int id : listRobots){
-                int breakOdds = rand() % 500; //Change the mod integer here to alter the odds of a robot breaking every second during cleaning (for each robot). odds are 1 in {integer here}. ex. 1 in 500
+                int breakOdds = rand() % 100; //Change the mod integer here to alter the odds of a robot breaking every second during cleaning (for each robot). odds are 1 in {integer here}. ex. 1 in 500
                 if (breakOdds == 1){
-                    fmt::print("Robot {} has broken during the cleaning of room {}. The room will remain dirty until re-cleaned successfully.", id, roomID);
+                    fmt::print("Robot {} has broken during the cleaning of room {}. The room will remain dirty until re-cleaned successfully.\n", id, roomID);
                     for (int resetID : listRobots){
                         robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
                     }
                     robots.at(id)->setRobotStatus(RobotStatus::BROKEN);
                     rooms[roomID].setClean(false);
                     return;
+                }
+                if (robots.at(id)->getRobotBatteryLevel()<1){
+                    fmt::print("Robot {} is out of battery. The room will remain dirty until re-cleaned successfully.\n", id);
+                    for (int resetID : listRobots){
+                        robots.at(resetID)->setRobotStatus(RobotStatus::AVAILABLE);
+                    }
+                }
+                switch (robots.at(id)->getRobotSize())
+                {
+                case RobotSize::LARGE:
+                    robots.at(id)->setBatteryLevel(robots.at(id)->getRobotBatteryLevel() - 1);
+                    break;
+                case RobotSize::MEDIUM:
+                    robots.at(id)->setBatteryLevel(robots.at(id)->getRobotBatteryLevel() - 2);                    
+                    break;
+                default:
+                    robots.at(id)->setBatteryLevel(robots.at(id)->getRobotBatteryLevel() - 4);
+                    break;
                 }
             }
             sleep(1);
