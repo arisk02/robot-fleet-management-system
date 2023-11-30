@@ -119,6 +119,10 @@ namespace cleaningSys {
         }
         return statusList;
     }
+    vector<string> queryRobotStatus()//overload function that will query status of ALL robots
+    {
+        for (int )
+    }
 
     vector<string> cleaningSystem::queryRoomStatus(vector<int> listRooms){
         std::vector<string> statusList;
