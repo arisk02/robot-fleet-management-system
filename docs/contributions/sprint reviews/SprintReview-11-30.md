@@ -17,11 +17,14 @@
 
 ## Aris
 
-
-
-
-
-
+- Fixed virtual class and subclass issues
+  - changed vector to vector<Robot*> in header and all functions dynamically allocated Robots
+- Chnaged vector storage to dictionary storage for better efficiency 
+- Created a cleaningSystem constructor that takes in parameters for a custom fleet and building size
+- Added custom fleet functionality to Main
+- Changed the hardcoded queries for robot and room status in Main
+  - Added ability to query specific robot or room statuses or querying all
+  - Created customSplit function that lets the user input ids all at once separated by space instead of one by one      
 
 
 
