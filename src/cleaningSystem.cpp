@@ -96,14 +96,6 @@ namespace cleaningSys {
         }
     }
 
-    vector<Robot*> cleaningSystem::getRobots(vector<int> ids){
-        std::vector<Robot*> selectedRobots;
-        for (int id : ids){
-            selectedRobots.push_back(robots[id]);
-        }
-        return selectedRobots;
-    }
-
     vector<string> cleaningSystem::queryRobotStatus(vector<int> listRobotints){
         std::vector<string> statusList;
         for (int id : listRobotints){
@@ -311,16 +303,14 @@ namespace cleaningSys {
         return;
     }
     void cleaningSystem::recharge(vector<int> botIds){
-        vector<Robot*> bots = getRobots(botIds);
-        for (auto robot: bots) {
-            robot->chargeRobot();
-        }   
+        for (int id : botIds) {
+            robots[id]->chargeRobot();
+        } 
     }
     void cleaningSystem::repair(vector<int> botIds){
-      vector<Robot*> bots = getRobots(botIds);
-        for (auto robot: bots) {
-            robot->fixRobot();
-        }
+        for (int id : botIds) {
+            robots[id]->fixRobot();
+        } 
     }
     void cleaningSystem::loggerSetup(string filename){
         logFilename = filename;

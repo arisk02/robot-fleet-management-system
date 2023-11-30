@@ -18,7 +18,6 @@ namespace cleaningSys
         private:
         std::map<int, Robot*> robots;
         std::map<int, Room> rooms;
-        vector<Robot*> getRobots(vector<int> ids);
         vector<future<void>> futures;
         int roomCounter = 0;
         int robotCounter = 0;
