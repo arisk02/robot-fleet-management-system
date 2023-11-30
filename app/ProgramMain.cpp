@@ -3,6 +3,7 @@
 #include <string>
 #include <fmt/core.h>
 #include "../src/cleaningSystem.cpp"
+#include "../src/logger.cpp"
 
 
 using namespace std;
@@ -16,6 +17,7 @@ int main() {
 
     cleaningSystem newCleaningSystem;
     fmt::print("Welcome to your Robot Fleet Management System!");
+    Logger::Logger("log.csv", newCleaningSystem);
     while (true) {
         fmt::print("Main:\n");
         fmt::print("1. See Robot Status\n");
