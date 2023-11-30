@@ -10,13 +10,15 @@ namespace cleaningSys {
 
 
     cleaningSystem::cleaningSystem() { 
-        rooms[1] = (Room(Room::Size::medium, true, 1));
-        robots[1] = (new Mopper(RobotSize::LARGE, 2));
-        robots[2] = (new Mopper(RobotSize::MEDIUM, 3));
-        robots[3] = (new Mopper(RobotSize::SMALL, 4));
-        robots[4] = (new Vacuum(RobotSize::MEDIUM, 5));
-        robots[5] = (new Scrubber(RobotSize::MEDIUM, 6));
-        robots[6] = (new Mopper(RobotSize::MEDIUM, 7));
+        rooms[0] = (Room(Room::Size::medium, true, 0));
+        robots[0] = (new Mopper(RobotSize::LARGE, 0));
+        robots[1] = (new Mopper(RobotSize::MEDIUM, 1));
+        robots[2] = (new Mopper(RobotSize::SMALL, 2));
+        robots[3] = (new Vacuum(RobotSize::MEDIUM, 3));
+        robots[4] = (new Scrubber(RobotSize::MEDIUM, 4));
+        robots[5] = (new Mopper(RobotSize::MEDIUM, 5));
+        roomCounter = 1;
+        robotCounter = 6;
     }
 
     cleaningSystem::cleaningSystem( int smallScrubbers, int mediumScrubbers, int largeScrubbers,
