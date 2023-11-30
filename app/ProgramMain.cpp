@@ -117,12 +117,20 @@ int main() {
             vector<int> robots;
 
             string robotsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the robots whose status you want separated by a space: ");
+            fmt::print("Enter the ids of the robots whose status you want separated by a space, or -1 to show all: ");
             cin.ignore();
             getline(cin, robotsids);
             robots = customSplit(robotsids);
 
-            auto status = newCleaningSystem.queryRobotStatus(robots); 
+            vector<string> status;
+
+            if (robots[0] != -1) {
+                status = newCleaningSystem.queryRobotStatus();
+            }
+            else {
+                status = newCleaningSystem.queryRobotStatus(robots);
+            }
+
             int itemPerRobot = 3;
             for (int i = 0; i < status.size(); i += itemPerRobot) {
                 fmt::print("Robot {} is {} and is at the battery level {}\n", status[i], status[i + 1], status[i + 2]);
@@ -136,12 +144,20 @@ int main() {
             vector<int> rooms;
 
             string roomsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the rooms whose status you want separated by a space: ");
+            fmt::print("Enter the ids of the rooms whose status you want separated by a space, or -1 to show all: ");
             cin.ignore();
             getline(cin, roomsids);
             rooms = customSplit(roomsids);
 
-            auto status = newCleaningSystem.queryRoomStatus(rooms);
+            vector<string> status;
+
+            if (rooms[0] != -1) {
+                status = newCleaningSystem.queryRoomStatus();
+            }
+            else {
+                status = newCleaningSystem.queryRoomStatus(rooms);
+            }
+
             int itemPerRoom = 4;
             for (int i = 0; i < status.size(); i += itemPerRoom) {
                 fmt::print("Room {} is {} and is {}\n", status[i], status[i + 1], status[i + 2]);
