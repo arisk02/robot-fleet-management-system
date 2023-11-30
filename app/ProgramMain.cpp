@@ -159,7 +159,7 @@ int main() {
             vector<int> robots;
 
             string robotsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the rooms whose status you want separated by a space: ");
+            fmt::print("Enter the ids of the robots you want to assign to that room: ");
             cin.ignore();
             getline(cin, robotsids);
             robots = customSplit(robotsids);
@@ -174,7 +174,7 @@ int main() {
             vector<int> robots;
 
             string robotsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the rooms whose status you want separated by a space: ");
+            fmt::print("Enter the ids of the robots you want to fix: ");
             cin.ignore();
             getline(cin, robotsids);
             robots = customSplit(robotsids);
