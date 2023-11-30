@@ -30,7 +30,9 @@ namespace cleaningSys
                        int smallRooms, int mediumRooms, int largeRooms);
         ~cleaningSystem();
         vector<string> queryRobotStatus(vector<int> listRobots);
+        vector<string> queryRobotStatus();//overload function that will query status of ALL robots
         vector<string> queryRoomStatus(vector<int> listRooms);
+        vector<string> queryRoomStatus();//overload function that will query status of ALL rooms
         void clean(int room,vector<int> listRobots);
         void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID);
         void repair(string robot);
