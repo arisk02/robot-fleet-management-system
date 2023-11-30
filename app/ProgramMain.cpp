@@ -8,13 +8,85 @@
 using namespace std;
 using namespace cleaningSys;
 
+cleaningSystem create(int def,  int smallScrubbers, int mediumScrubbers, int largeScrubbers,
+                                int smallVacuums, int mediumVacuums, int largeVacuums,
+                                int smallMoppers, int mediumMoppers, int largeMoppers,
+                                int smallRooms, int mediumRooms, int largeRooms) {
+    if (def == 1) {
+        return cleaningSystem(smallScrubbers, mediumScrubbers, largeScrubbers,
+                              smallVacuums, mediumVacuums, largeVacuums,
+                              smallMoppers, mediumMoppers, largeMoppers,
+                              smallRooms, mediumRooms, largeRooms);
+    }
+    else {
+        return cleaningSystem();
+    }
+}
+
 int main() {
     // if (argc != 3) {
     //     cout << "Usage: Please enter the number of rooms and the number of robots" << endl;
     //     return 1;
     // }
+    fmt::print("Welcome to your Robot Fleet Management System!\n");
+    fmt::print("Input 0 to create a fleet of default size, or 1 for custom size:\n");
 
-    cleaningSystem newCleaningSystem;
+    int choice;
+    cin >> choice;
+
+    int smallScrubbers;
+    int mediumScrubbers;
+    int largeScrubbers;
+
+    int smallVacuums;
+    int mediumVacuums;
+    int largeVacuums;
+
+    int smallMoppers;
+    int mediumMoppers;
+    int largeMoppers;
+
+    int smallRooms;
+    int mediumRooms;
+    int largeRooms;
+
+
+    if (choice == 1) {
+        fmt::print("Desired number of small Scrubbers:\n");
+        cin >> smallScrubbers;
+        fmt::print("Desired number of medium Scrubbers:\n");
+        cin >> mediumScrubbers;
+        fmt::print("Desired number of large Scrubbers:\n");
+        cin >> largeScrubbers;
+        
+        fmt::print("Desired number of small Vacuums:\n");
+        cin >> smallVacuums;
+        fmt::print("Desired number of medium Vacuums:\n");
+        cin >> mediumVacuums;
+        fmt::print("Desired number of large Vacuums:\n");
+        cin >> largeVacuums;
+
+        fmt::print("Desired number of small Moppers:\n");
+        cin >> smallMoppers;
+        fmt::print("Desired number of medium Moppers:\n");
+        cin >> mediumMoppers;
+        fmt::print("Desired number of large Moppers:\n");
+        int largeMoppers;
+        cin >> largeMoppers;
+
+        fmt::print("Desired number of small Rooms:\n");
+        cin >> smallRooms;
+        fmt::print("Desired number of medium Rooms:\n");
+        cin >> mediumRooms;
+        fmt::print("Desired number of large Rooms:\n");
+        cin >> largeRooms;
+    }
+
+    cleaningSystem newCleaningSystem = create(choice, smallScrubbers, mediumScrubbers, largeScrubbers,
+                                                          smallVacuums, mediumVacuums, largeVacuums,
+                                                          smallMoppers, mediumMoppers, largeMoppers,
+                                                          smallRooms, mediumRooms, largeRooms);
+
     fmt::print("Welcome to your Robot Fleet Management System!\n");
     while (true) {
         fmt::print("Main:\n");
