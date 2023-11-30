@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 #include <future>
+#include <fstream>
 
 using namespace std;
 namespace cleaningSys
@@ -21,6 +22,7 @@ namespace cleaningSys
         vector<future<void>> futures;
         int roomCounter = 0;
         int robotCounter = 0;
+        string logFilename;
 
         public:
         cleaningSystem();
@@ -37,6 +39,8 @@ namespace cleaningSys
         void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID);
         void repair(string robot);
         void recharge(string robot);
+        void loggerSetup(string filename);
+        void log();
         
         
 

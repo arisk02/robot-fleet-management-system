@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <future>
-
+/*
 using namespace std;
 class Logger
 {
@@ -15,8 +15,9 @@ private:
 
 
 public:
-    Logger(string filename, cleaningSys::cleaningSystem cleanSystem);
-    void loggerAsync();
+    Logger(string filename, cleaningSys::cleaningSystem& cleanSystem);
+    void log();
 };
 
+*/
 #endif

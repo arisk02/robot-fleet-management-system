@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <unistd.h> //enables sleep for linux based systems
 #include <chrono>
+#include <algorithm>
 
 namespace cleaningSys {
 
@@ -184,8 +185,10 @@ namespace cleaningSys {
                 break;
             case Room::Size::medium:
                 statusList.push_back("medium");
+                break;
             case Room::Size::large:
                 statusList.push_back("large");
+                break;
             }
             if (room.second.getClean()){
                 statusList.push_back("Clean");
@@ -240,12 +243,17 @@ namespace cleaningSys {
             for (int id : listRobots){//sets the status of all robots to cleaning
                 robots[id]->setRobotStatus(RobotStatus::CLEANING);
             }
+            /*
+            vector<int> futuresToErase;
             for (int i=0; i< futures.size();i++){//this loop goes through each future in the futures list and invalidates it and erases it from the list in hopes of mitigating memory leaks
                 if (futures[i].wait_for(chrono::seconds(0))==future_status::ready){
                     futures[i].get();
-                    futures.erase(futures.begin()+i);
+                    futuresToErase.push_back(i);
                 }
             }
+            for (int i=futuresToErase.size()-1; i>=0;i--){
+                futures.erase(futures.begin()+i);
+            }*/
             rooms[roomid].setClean(false);
             rooms.at(roomid).setOccupiedByRobot(true);
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
@@ -307,4 +315,49 @@ namespace cleaningSys {
         
     }
 
+    void cleaningSystem::loggerSetup(string filename){
+        logFilename = filename;
+        ofstream logFile;
+        logFile.open(filename);
+        logFile << "Time" << ",";
+        vector<string> robotStatusList = queryRobotStatus();
+        vector<string> roomStatusList = queryRoomStatus();
+        for (int id=0; id<robotStatusList.size();id+=3){
+            logFile << "Robot " << robotStatusList[id] << " Status" << ",";
+            logFile << "Robot " << robotStatusList[id] << " Battery" << ",";
+        }
+        for (int id=0; id<roomStatusList.size();id+=4){
+            logFile << "Room " << roomStatusList[id] << " Cleanliness" << ",";
+            if (id + 4 < roomStatusList.size()){
+                logFile << "Room " << roomStatusList[id] << " Status" << ",";
+            }
+            else {
+                logFile << "Room " << roomStatusList[id] << " Status\n";
+            }
+        }
+        logFile.close();
+    }
+
+    void cleaningSystem::log(){
+        ofstream logFile;
+        logFile.open(logFilename, std::ios::out | std::ios::app);
+        vector<string> robotStatusList = queryRobotStatus();
+        vector<string> roomStatusList = queryRoomStatus();
+        auto currTime = chrono::system_clock::now();
+        auto currTimeT = chrono::system_clock::to_time_t(currTime);
+        auto curr_local = localtime(&currTimeT);
+        logFile << put_time(curr_local, "%c") << ",";
+        for (int i=1; i<robotStatusList.size();i+=3){
+            logFile << robotStatusList[i] << "," << robotStatusList[i+1] << ",";
+        }
+        for (int i=2; i<roomStatusList.size(); i+=4){
+            if (i + 4 < roomStatusList.size()){
+                logFile << roomStatusList[i] << "," << roomStatusList[i+1] << ",";
+            }
+            else {
+                logFile << roomStatusList[i] << "," << roomStatusList[i+1] << "\n";
+            }
+        }
+        logFile.close();
+    }
 }

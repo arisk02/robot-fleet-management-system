@@ -17,8 +17,9 @@ int main() {
 
     cleaningSystem newCleaningSystem;
     fmt::print("Welcome to your Robot Fleet Management System!");
-    Logger::Logger("log.csv", newCleaningSystem);
+    newCleaningSystem.loggerSetup("log.csv");
     while (true) {
+        newCleaningSystem.log();
         fmt::print("Main:\n");
         fmt::print("1. See Robot Status\n");
         fmt::print("2. See Room Status\n");

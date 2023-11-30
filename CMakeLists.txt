@@ -11,7 +11,6 @@ add_library(CleaningSystemLib
   src/scrubber.cpp
   src/cleaningSystem.cpp
   src/vacuum.cpp
-  src/logger.cpp
 )
 
 target_include_directories(CleaningSystemLib
