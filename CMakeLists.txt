@@ -26,3 +26,5 @@ target_link_libraries(CleaningSystemLib
 )
 
 add_subdirectory(app)
+add_subdirectory(tests)
+
