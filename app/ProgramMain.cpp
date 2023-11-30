@@ -3,6 +3,7 @@
 #include <string>
 #include <fmt/core.h>
 #include <sstream>
+#include "../src/cleaningSystem.cpp"
 
 
 using namespace std;
@@ -125,7 +126,7 @@ int main() {
 
             vector<string> status;
 
-            if (robots[0] != -1) {
+            if (robots[0] == -1) {
                 status = newCleaningSystem.queryRobotStatus();
             }
             else {
@@ -152,7 +153,7 @@ int main() {
 
             vector<string> status;
 
-            if (rooms[0] != -1) {
+            if (rooms[0] == -1) {
                 status = newCleaningSystem.queryRoomStatus();
             }
             else {
