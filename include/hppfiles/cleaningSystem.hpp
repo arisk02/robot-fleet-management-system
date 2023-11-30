@@ -36,14 +36,14 @@ namespace cleaningSys
         vector<string> queryRoomStatus(vector<int> listRooms);
         vector<string> queryRoomStatus();//overload function that will query status of ALL rooms
         void clean(int room,vector<int> listRobots);
+        void repair(vector<int> botIds);
+        void recharge(vector<int> botIds);
         void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID);
         void repair(string robot);
         void recharge(string robot);
         void loggerSetup(string filename);
         void log();
-        
-        
-
+      
     };
 }
 #endif
