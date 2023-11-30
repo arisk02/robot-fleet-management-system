@@ -2,7 +2,6 @@
 #include <vector>
 #include <string>
 #include <fmt/core.h>
-#include "../src/cleaningSystem.cpp"
 #include <sstream>
 
 
@@ -101,7 +100,9 @@ int main() {
                                                           smallMoppers, mediumMoppers, largeMoppers,
                                                           smallRooms, mediumRooms, largeRooms);
 
+    newCleaningSystem.loggerSetup("log.csv");
     while (true) {
+        newCleaningSystem.log();
         fmt::print("Main:\n");
         fmt::print("1. See Robot Status\n");
         fmt::print("2. See Room Status\n");

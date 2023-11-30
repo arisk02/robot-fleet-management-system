@@ -3,8 +3,9 @@
 #include <string>
 #include <fmt/core.h>
 #include <cstdlib>
-#include <unistd.h>
+#include <unistd.h> //enables sleep for linux based systems
 #include <chrono>
+#include <algorithm>
 
 namespace cleaningSys {
 
@@ -121,6 +122,27 @@ namespace cleaningSys {
         }
         return statusList;
     }
+    vector<string> cleaningSystem::queryRobotStatus()//overload function that will query status of ALL robots
+    {
+        std::vector<string> statusList;
+        for (auto bot : robots){
+            statusList.push_back(std::to_string(bot.first));
+            switch (bot.second->getRobotStatus())
+            {
+            case RobotStatus::CLEANING:
+                statusList.push_back("Cleaning");
+                break;
+            case RobotStatus::BROKEN:
+                statusList.push_back("Broken");
+                break;
+            default:
+                statusList.push_back("Availible");
+                break;
+            }
+            statusList.push_back(std::to_string(bot.second->getRobotBatteryLevel()));
+        }
+        return statusList;
+    }
 
     vector<string> cleaningSystem::queryRoomStatus(vector<int> listRooms){
         std::vector<string> statusList;
@@ -149,6 +171,39 @@ namespace cleaningSys {
                 statusList.push_back("not occupied by robot");
             }
             
+        }
+        return statusList;
+    }
+
+    vector<string> cleaningSystem::queryRoomStatus()//overload function that will query status of ALL rooms
+    {
+        std::vector<string> statusList;
+        for (auto room : rooms){
+            statusList.push_back(to_string(room.first));
+            switch (room.second.getSize())
+            {
+            case Room::Size::small:
+                statusList.push_back("small");
+                break;
+            case Room::Size::medium:
+                statusList.push_back("medium");
+                break;
+            case Room::Size::large:
+                statusList.push_back("large");
+                break;
+            }
+            if (room.second.getClean()){
+                statusList.push_back("Clean");
+            }
+            else {
+                statusList.push_back("Dirty");
+            }
+            if (room.second.getOccupiedByRobot()){
+                statusList.push_back("occupied by robot");
+            }
+            else {
+                statusList.push_back("not occupied by robot");
+            }
         }
         return statusList;
     }
@@ -190,16 +245,22 @@ namespace cleaningSys {
             for (int id : listRobots){//sets the status of all robots to cleaning
                 robots[id]->setRobotStatus(RobotStatus::CLEANING);
             }
+            /*
+            vector<int> futuresToErase;
             for (int i=0; i< futures.size();i++){//this loop goes through each future in the futures list and invalidates it and erases it from the list in hopes of mitigating memory leaks
                 if (futures[i].wait_for(chrono::seconds(0))==future_status::ready){
                     futures[i].get();
-                    futures.erase(futures.begin()+i);
+                    futuresToErase.push_back(i);
                 }
             }
+            for (int i=futuresToErase.size()-1; i>=0;i--){
+                futures.erase(futures.begin()+i);
+            }*/
             rooms[roomid].setClean(false);
             rooms.at(roomid).setOccupiedByRobot(true);
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
         }
+        
 
     }
     void cleaningSystem::cleanAsync(vector<int> listRobots, int cleaningTime, int roomID){
@@ -260,5 +321,50 @@ namespace cleaningSys {
         for (auto robot: bots) {
             robot->fixRobot();
         }
+    }
+    void cleaningSystem::loggerSetup(string filename){
+        logFilename = filename;
+        ofstream logFile;
+        logFile.open(filename);
+        logFile << "Time" << ",";
+        vector<string> robotStatusList = queryRobotStatus();
+        vector<string> roomStatusList = queryRoomStatus();
+        for (int id=0; id<robotStatusList.size();id+=3){
+            logFile << "Robot " << robotStatusList[id] << " Status" << ",";
+            logFile << "Robot " << robotStatusList[id] << " Battery" << ",";
+        }
+        for (int id=0; id<roomStatusList.size();id+=4){
+            logFile << "Room " << roomStatusList[id] << " Cleanliness" << ",";
+            if (id + 4 < roomStatusList.size()){
+                logFile << "Room " << roomStatusList[id] << " Status" << ",";
+            }
+            else {
+                logFile << "Room " << roomStatusList[id] << " Status\n";
+            }
+        }
+        logFile.close();
+    }
+
+    void cleaningSystem::log(){
+        ofstream logFile;
+        logFile.open(logFilename, std::ios::out | std::ios::app);
+        vector<string> robotStatusList = queryRobotStatus();
+        vector<string> roomStatusList = queryRoomStatus();
+        auto currTime = chrono::system_clock::now();
+        auto currTimeT = chrono::system_clock::to_time_t(currTime);
+        auto curr_local = localtime(&currTimeT);
+        logFile << put_time(curr_local, "%c") << ",";
+        for (int i=1; i<robotStatusList.size();i+=3){
+            logFile << robotStatusList[i] << "," << robotStatusList[i+1] << ",";
+        }
+        for (int i=2; i<roomStatusList.size(); i+=4){
+            if (i + 4 < roomStatusList.size()){
+                logFile << roomStatusList[i] << "," << roomStatusList[i+1] << ",";
+            }
+            else {
+                logFile << roomStatusList[i] << "," << roomStatusList[i+1] << "\n";
+            }
+        }
+        logFile.close();
     }
 }
