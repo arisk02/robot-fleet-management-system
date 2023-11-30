@@ -2,7 +2,10 @@
 
 
 ## Bereket
-
+- Updated system with a modified functionality of recharge and fix
+- Updated main when new features were added or when features were changed to cleaningsystem and other classes (this is what took most of my time)
+- Began adding more input and error handling
+- Began researching bonus features to implement
 
 ## Ethan
 - Updated the clean sequence diagram
