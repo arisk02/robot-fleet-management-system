@@ -119,9 +119,26 @@ namespace cleaningSys {
         }
         return statusList;
     }
-    vector<string> queryRobotStatus()//overload function that will query status of ALL robots
+    vector<string> cleaningSystem::queryRobotStatus()//overload function that will query status of ALL robots
     {
-        for (int )
+        std::vector<string> statusList;
+        for (auto bot : robots){
+            statusList.push_back(std::to_string(bot.first));
+            switch (bot.second->getRobotStatus())
+            {
+            case RobotStatus::CLEANING:
+                statusList.push_back("Cleaning");
+                break;
+            case RobotStatus::BROKEN:
+                statusList.push_back("Broken");
+                break;
+            default:
+                statusList.push_back("Availible");
+                break;
+            }
+            statusList.push_back(std::to_string(bot.second->getRobotBatteryLevel()));
+        }
+        return statusList;
     }
 
     vector<string> cleaningSystem::queryRoomStatus(vector<int> listRooms){
@@ -151,6 +168,37 @@ namespace cleaningSys {
                 statusList.push_back("not occupied by robot");
             }
             
+        }
+        return statusList;
+    }
+
+    vector<string> cleaningSystem::queryRoomStatus()//overload function that will query status of ALL rooms
+    {
+        std::vector<string> statusList;
+        for (auto room : rooms){
+            statusList.push_back(to_string(room.first));
+            switch (room.second.getSize())
+            {
+            case Room::Size::small:
+                statusList.push_back("small");
+                break;
+            case Room::Size::medium:
+                statusList.push_back("medium");
+            case Room::Size::large:
+                statusList.push_back("large");
+            }
+            if (room.second.getClean()){
+                statusList.push_back("Clean");
+            }
+            else {
+                statusList.push_back("Dirty");
+            }
+            if (room.second.getOccupiedByRobot()){
+                statusList.push_back("occupied by robot");
+            }
+            else {
+                statusList.push_back("not occupied by robot");
+            }
         }
         return statusList;
     }
@@ -202,6 +250,7 @@ namespace cleaningSys {
             rooms.at(roomid).setOccupiedByRobot(true);
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
         }
+        
 
     }
     void cleaningSystem::cleanAsync(vector<int> listRobots, int cleaningTime, int roomID){
