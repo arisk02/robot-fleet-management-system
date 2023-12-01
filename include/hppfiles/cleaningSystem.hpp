@@ -34,8 +34,8 @@ namespace cleaningSys
         vector<string> queryRobotStatus();//overload function that will query status of ALL robots
         vector<string> queryRoomStatus(vector<int> listRooms);
         vector<string> queryRoomStatus();//overload function that will query status of ALL rooms
-        inline int getRoomCount() {return roomCounter};
-        inline int getRobotCount() {return robotCounter};
+        inline int getRoomCount() {return roomCounter;}
+        inline int getRobotCount() {return robotCounter;}
         void clean(int room,vector<int> listRobots);
         void repair(vector<int> botIds);
         void recharge(vector<int> botIds);
