@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(CleaningSystemLib)
 
+find_package(Threads REQUIRED)
+
 include(dependencies.cmake)
 
 add_library(CleaningSystemLib
@@ -20,6 +22,9 @@ target_include_directories(CleaningSystemLib
 
 target_link_libraries(CleaningSystemLib
   fmt::fmt
+  Threads::Threads
 )
 
 add_subdirectory(app)
+add_subdirectory(tests)
+
