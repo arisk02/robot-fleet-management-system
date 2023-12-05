@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cctype>
 #include <string>
 #include <fmt/core.h>
 #include <sstream>
@@ -36,6 +37,9 @@ std::vector<int> customSplit(const std::string& input) {
 
     return result;
 }
+
+// create a int checker function
+
 
 int main() {
     // if (argc != 3) {
@@ -190,13 +194,38 @@ int main() {
 
         } else if (choice == 4) {
             vector<int> robots;
-
-            string robotsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the robots you want to fix: ");
-            cin.ignore();
-            getline(cin, robotsids);
-            robots = customSplit(robotsids);
-
+            int maxID = newCleaningSystem.getRobotCount();
+            string robotsids; 
+            bool loop = true;
+            while(true) {
+                fmt::print("Enter the ids of the robots you want to fix. Enter -1 to return to main: "); //returning to main todo
+                cin.ignore();
+                getline(cin, robotsids);
+                robots = customSplit(robotsids);
+                for (auto id:robots) {
+                    if (true){//change to int checker
+                        if (id < 0) {
+                            break;
+                        }
+                        else if(id > maxID) {
+                            fmt::print("One or more IDs were invalid. Try again.\n");
+                            loop = true;
+                            break;
+                        }
+                        else {
+                            loop = false;
+                        }
+                    }
+                    else {
+                        fmt::print("Please only enter digits. \n");
+                        break;
+                    }
+                }
+                if (loop == false) {
+                    break;
+                }
+            }
+                    
             while(true) {
                 fmt::print("Please select a command:\n");
                 fmt::print("1. Charge robot\n");
