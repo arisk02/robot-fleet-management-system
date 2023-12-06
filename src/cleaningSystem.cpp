@@ -371,7 +371,17 @@ namespace cleaningSys {
         }
         return true;
     }
-    bool cleaningSystem::validateRoomIDs(vector<int> botIds){
-
+    bool cleaningSystem::validateRoomIDs(vector<int> roomIds){
+        for(int id : roomIds){
+            if (robots.count(id)>0)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
