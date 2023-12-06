@@ -373,7 +373,7 @@ namespace cleaningSys {
     }
     bool cleaningSystem::validateRoomIDs(vector<int> roomIds){
         for(int id : roomIds){
-            if (robots.count(id)>0)
+            if (rooms.count(id)>0)
             {
                 continue;
             }
@@ -383,5 +383,13 @@ namespace cleaningSys {
             }
         }
         return true;
+    }
+    bool cleaningSystem::validateRoomIDs(int roomID){
+        if(rooms.count(roomID)>0){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
