@@ -22,9 +22,6 @@ namespace cleaningSys
         int roomCounter = 0;
         int robotCounter = 0;
         string logFilename;
-        bool validateRobotIDs(vector<int> botIds);
-        bool validateRoomIDs(vector<int> roomIds);
-        bool validateRoomIDs(int roomID);
 
         public:
         cleaningSystem();
@@ -45,9 +42,9 @@ namespace cleaningSys
         void recharge(string robot);
         void loggerSetup(string filename);
         void log();
-
-        
-      
+        bool validateRobotIDs(vector<int> botIds);
+        bool validateRoomIDs(vector<int> roomIds);
+        bool validateRoomIDs(int roomID);
     };
 }
 #endif
