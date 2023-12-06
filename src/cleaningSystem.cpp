@@ -359,9 +359,19 @@ namespace cleaningSys {
         logFile.close();
     }
     bool cleaningSystem::validateRobotIDs(vector<int> botIds){
-
+        for(int id : botIds){
+            if (robots.count(id)>0)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
     }
     bool cleaningSystem::validateRoomIDs(vector<int> botIds){
-        
+
     }
 }
