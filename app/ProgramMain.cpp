@@ -130,6 +130,10 @@ int main() {
                 status = newCleaningSystem.queryRobotStatus();
             }
             else {
+                if (!newCleaningSystem.validateRobotIDs(robots)){
+                    fmt::print("\nError: One or more of the input IDs were invalid.\n\n");
+                    continue;
+                }
                 status = newCleaningSystem.queryRobotStatus(robots);
             }
 
@@ -157,6 +161,10 @@ int main() {
                 status = newCleaningSystem.queryRoomStatus();
             }
             else {
+                if (!newCleaningSystem.validateRoomIDs(rooms)){
+                    fmt::print("\nError: One or more of the input IDs were invalid.\n\n");
+                    continue;
+                }
                 status = newCleaningSystem.queryRoomStatus(rooms);
             }
 
@@ -173,6 +181,10 @@ int main() {
             int roomid; //potential bug: if user enters a non-integer, the program will crash
             cout << "Enter the id of the room you want to clean: ";
             cin >> roomid;
+            if (!newCleaningSystem.validateRoomIDs(roomid)){
+                    fmt::print("\nError: Invalid room ID.\n\n");
+                    continue;
+            }
 
             vector<int> robots;
 
@@ -181,7 +193,10 @@ int main() {
             cin.ignore();
             getline(cin, robotsids);
             robots = customSplit(robotsids);
-
+            if (!newCleaningSystem.validateRobotIDs(robots)){
+                    fmt::print("\nError: One or more of the input IDs were invalid.\n\n");
+                    continue;
+            }
             newCleaningSystem.clean(roomid, robots);
             
             fmt::print("Type anything to return to the main menu: ");
@@ -196,6 +211,10 @@ int main() {
             cin.ignore();
             getline(cin, robotsids);
             robots = customSplit(robotsids);
+            if (!newCleaningSystem.validateRobotIDs(robots)){
+                    fmt::print("\nError: One or more of the input IDs were invalid.\n\n");
+                    continue;
+            }
 
             while(true) {
                 fmt::print("Please select a command:\n");
