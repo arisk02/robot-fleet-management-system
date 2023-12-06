@@ -358,4 +358,10 @@ namespace cleaningSys {
         }
         logFile.close();
     }
+    bool cleaningSystem::validateRobotIDs(vector<int> botIds){
+
+    }
+    bool cleaningSystem::validateRoomIDs(vector<int> botIds){
+        
+    }
 }
