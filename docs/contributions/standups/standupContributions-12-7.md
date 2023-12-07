@@ -12,3 +12,5 @@
 
 
 ## Aris
+- redid error checking due to many bugs because of the system differences
+- implemented config file capability in the default constructor
