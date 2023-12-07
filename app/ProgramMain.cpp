@@ -12,15 +12,15 @@ using namespace std;
 using namespace cleaningSys;
 
 // Create custom split() function.  
-std::vector<int> customSplit(string choice, string er) {
-    std::string userInput;
-    std::vector<int> numbers;
+vector<int> customSplit(string choice, string er) {
+    string userInput;
+    vector<int> numbers;
 
     while (true) {
-        fmt::print(choice);
-        std::getline(std::cin, userInput);
+        fmt::print("{}", choice);
+        getline(cin, userInput);
 
-        std::istringstream iss(userInput);
+        istringstream iss(userInput);
         int num;
 
         while (iss >> num) {
@@ -28,7 +28,7 @@ std::vector<int> customSplit(string choice, string er) {
         }
 
         if (iss.fail() && !iss.eof()) {
-            fmt::print(er);
+            fmt::print("{}", er);
             numbers.clear();  // Clear the vector for invalid input
         } else {
             break;  // Exit the loop if input is valid
@@ -41,7 +41,6 @@ std::vector<int> customSplit(string choice, string er) {
 
 int main() {
 
-    cout << std::filesystem::current_path();
     
     fmt::print("Welcome to your Robot Fleet Management System!");
 
