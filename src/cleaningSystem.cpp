@@ -15,7 +15,7 @@ namespace cleaningSys {
     cleaningSystem::cleaningSystem() { 
 
         // std::ifstream is RAII, i.e. no need to call close
-        const char* fileName = "config_file.txt";
+        const char* fileName = "../../config_and_log/config_file.txt";
         ifstream cFile (fileName);
 
         if (cFile.is_open())

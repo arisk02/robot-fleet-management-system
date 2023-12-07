@@ -46,7 +46,7 @@ int main() {
 
     cleaningSystem newCleaningSystem;
 
-    newCleaningSystem.loggerSetup("log.csv");
+    newCleaningSystem.loggerSetup("../../config_and_log/log.csv");
     while (true) {
         newCleaningSystem.log();
         fmt::print("\nMain:");
