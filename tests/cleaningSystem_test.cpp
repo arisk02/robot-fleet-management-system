@@ -6,10 +6,7 @@
 using namespace cleaningSys;
 using namespace std;
 
- cleaningSystem newCleaningSystem {1, 1, 1,
-                                        2, 2, 2,
-                                        3, 3, 3,
-                                        4, 4, 4};
+ cleaningSystem newCleaningSystem {};
 
 TEST_CASE("Query Robot Status"){
 
