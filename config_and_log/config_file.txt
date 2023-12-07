@@ -1,0 +1,16 @@
+small_scrubbers:	1
+medium_scrubbers:	2
+large_scrubbers:	3
+
+small_vacuums:		1
+medium_vacuums:		2
+large_vacuums:		3
+
+small_moppers:		1
+medium_moppers:		2
+large_moppers:		3
+
+small_rooms:		1
+medium_rooms:		2
+large_rooms:		3
+
