@@ -4,37 +4,23 @@
 #include <string>
 #include <fmt/core.h>
 #include <sstream>
+#include <filesystem>
 #include "../src/cleaningSystem.cpp"
 
 
 using namespace std;
 using namespace cleaningSys;
 
-cleaningSystem create(int def,  int smallScrubbers, int mediumScrubbers, int largeScrubbers,
-                                int smallVacuums, int mediumVacuums, int largeVacuums,
-                                int smallMoppers, int mediumMoppers, int largeMoppers,
-                                int smallRooms, int mediumRooms, int largeRooms) {
-    if (def == 1) {
-        return cleaningSystem(smallScrubbers, mediumScrubbers, largeScrubbers,
-                              smallVacuums, mediumVacuums, largeVacuums,
-                              smallMoppers, mediumMoppers, largeMoppers,
-                              smallRooms, mediumRooms, largeRooms);
-    }
-    else {
-        return cleaningSystem();
-    }
-}
-
 // Create custom split() function.  
-std::vector<int> customSplit(string choice, string er) {
-    std::string userInput;
-    std::vector<int> numbers;
+vector<int> customSplit(string choice, string er) {
+    string userInput;
+    vector<int> numbers;
 
     while (true) {
-        fmt::print(choice);
-        std::getline(std::cin, userInput);
+        fmt::print("{}", choice);
+        getline(cin, userInput);
 
-        std::istringstream iss(userInput);
+        istringstream iss(userInput);
         int num;
 
         while (iss >> num) {
@@ -42,7 +28,7 @@ std::vector<int> customSplit(string choice, string er) {
         }
 
         if (iss.fail() && !iss.eof()) {
-            fmt::print(er);
+            fmt::print("{}", er);
             numbers.clear();  // Clear the vector for invalid input
         } else {
             break;  // Exit the loop if input is valid
@@ -54,65 +40,11 @@ std::vector<int> customSplit(string choice, string er) {
 
 
 int main() {
+
     
     fmt::print("Welcome to your Robot Fleet Management System!");
-    fmt::print("\nInput 0 to create a fleet of default size, or 1 for custom size:");
 
-    int choice;
-    cin >> choice;
-
-    int smallScrubbers;
-    int mediumScrubbers;
-    int largeScrubbers;
-
-    int smallVacuums;
-    int mediumVacuums;
-    int largeVacuums;
-
-    int smallMoppers;
-    int mediumMoppers;
-    int largeMoppers;
-
-    int smallRooms;
-    int mediumRooms;
-    int largeRooms;
-
-
-    if (choice == 1) {
-        fmt::print("\nDesired number of small Scrubbers:");
-        cin >> smallScrubbers;
-        fmt::print("\nDesired number of medium Scrubbers:");
-        cin >> mediumScrubbers;
-        fmt::print("\nDesired number of large Scrubbers:");
-        cin >> largeScrubbers;
-        
-        fmt::print("\nDesired number of small Vacuums:");
-        cin >> smallVacuums;
-        fmt::print("\nDesired number of medium Vacuums:");
-        cin >> mediumVacuums;
-        fmt::print("\nDesired number of large Vacuums:");
-        cin >> largeVacuums;
-
-        fmt::print("\nDesired number of small Moppers:");
-        cin >> smallMoppers;
-        fmt::print("\nDesired number of medium Moppers:");
-        cin >> mediumMoppers;
-        fmt::print("\nDesired number of large Moppers:");
-        int largeMoppers;
-        cin >> largeMoppers;
-
-        fmt::print("\nDesired number of small Rooms:");
-        cin >> smallRooms;
-        fmt::print("\nDesired number of medium Rooms:");
-        cin >> mediumRooms;
-        fmt::print("\nDesired number of large Rooms:");
-        cin >> largeRooms;
-    }
-
-    cleaningSystem newCleaningSystem = create(choice, smallScrubbers, mediumScrubbers, largeScrubbers,
-                                                          smallVacuums, mediumVacuums, largeVacuums,
-                                                          smallMoppers, mediumMoppers, largeMoppers,
-                                                          smallRooms, mediumRooms, largeRooms);
+    cleaningSystem newCleaningSystem;
 
     newCleaningSystem.loggerSetup("log.csv");
     while (true) {
