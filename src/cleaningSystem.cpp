@@ -358,4 +358,38 @@ namespace cleaningSys {
         }
         logFile.close();
     }
+    bool cleaningSystem::validateRobotIDs(vector<int> botIds){
+        for(int id : botIds){
+            if (robots.count(id)>0)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool cleaningSystem::validateRoomIDs(vector<int> roomIds){
+        for(int id : roomIds){
+            if (rooms.count(id)>0)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool cleaningSystem::validateRoomIDs(int roomID){
+        if(rooms.count(roomID)>0){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

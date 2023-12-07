@@ -140,15 +140,19 @@ int main() {
                     fmt::print("Please only enter valid ids! \n");
                 }
                 else {
+                    if (!newCleaningSystem.validateRobotIDs(robots)){
+                        fmt::print("Please only enter valid ids! \n");
+                        continue;
+                    }
                     status = newCleaningSystem.queryRobotStatus(robots);
                     truth = false;
                 }
-            
-
+              
                 int itemPerRobot = 3;
                 for (int i = 0; i < status.size(); i += itemPerRobot) {
                     fmt::print("Robot {} is {} and is at the battery level {}\n", status[i], status[i + 1], status[i + 2]);
                 }
+
 
                 fmt::print("Type anything to return to the main menu: ");
                 string val;
@@ -177,10 +181,13 @@ int main() {
                         continue;
                     }
                 else {
+                    if (!newCleaningSystem.validateRoomIDs(rooms)){
+                        fmt::print("\nError: One or more of the input IDs were invalid.\n\n");
+                        continue;
+                    }
                     status = newCleaningSystem.queryRoomStatus(rooms);
                     truth = false;
                 }
-
                 int itemPerRoom = 4;
                 for (int i = 0; i < status.size(); i += itemPerRoom) {
                     fmt::print("Room {} is {} and is {}\n", status[i], status[i + 1], status[i + 2]);
@@ -190,6 +197,7 @@ int main() {
                 string val;
                 cin >> val;
             }
+
         } else if (choice == 3) { 
             int roomid; 
             bool truth = true;
@@ -206,6 +214,10 @@ int main() {
                 getline(cin, robotsids);
                 robots = customSplit(robotsids);
                 if (robots[0] != -403) {
+                    if (!newCleaningSystem.validateRobotIDs(robots)){
+                        fmt::print("Please only enter valid ids! \n");
+                        continue;
+                    }
                     truth = false;
                 }
                 else {
@@ -221,7 +233,6 @@ int main() {
 
         } else if (choice == 4) {
             vector<int> robots;
-            int maxID = newCleaningSystem.getRobotCount();
             string robotsids; 
             bool loop = true;
             while(true) {
@@ -232,13 +243,9 @@ int main() {
                 for (auto id : robots) {
                     bool truth = true;
                     if (id != -403 ) {
-                        if (id < 0) {
-                            break;
-                        }
-                        else if(id > maxID) {
-                            fmt::print("One or more IDs were invalid. Try again.\n");
-                            loop = true;
-                            break;
+                        if (!newCleaningSystem.validateRobotIDs(robots)){
+                            fmt::print("\nError: One or more of the input IDs were invalid.\n\n");
+                            continue;
                         }
                         else {
                             loop = false;
@@ -253,7 +260,6 @@ int main() {
                     break;
                 }
             }
-                    
             while(true) {
                 fmt::print("Please select a command:\n");
                 fmt::print("1. Charge robot\n");
