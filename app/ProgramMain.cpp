@@ -4,6 +4,7 @@
 #include <string>
 #include <fmt/core.h>
 #include <sstream>
+#include <filesystem>
 #include "../src/cleaningSystem.cpp"
 
 
@@ -39,6 +40,8 @@ std::vector<int> customSplit(string choice, string er) {
 
 
 int main() {
+
+    cout << std::filesystem::current_path();
     
     fmt::print("Welcome to your Robot Fleet Management System!");
 
