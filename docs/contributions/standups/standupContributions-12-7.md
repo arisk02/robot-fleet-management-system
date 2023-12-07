@@ -9,7 +9,8 @@
 - created validateRoomIDs to check that input Room IDs actually exist, also made an overload function for this to accept one ID
 
 ## Caitlin
-
+ - Began splitting testing card into smaller sections
+ - Began testing error handling
 
 ## Aris
 - redid error checking due to many bugs because of the system differences
