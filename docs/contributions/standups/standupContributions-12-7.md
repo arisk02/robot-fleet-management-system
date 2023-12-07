@@ -1,7 +1,7 @@
 # 12/7/23 Standup Contributions
 
 ## Bereket
--Worked on the original error-handling for incorrect or malicious robot IDs such as a string or id that doesn't exist(like a negative number).
+- Worked on the original error-handling for incorrect or malicious robot IDs such as a string or id that doesn't exist(like a negative number).
 
 ## Ethan
 - worked with team to clean up giithub branches and establish issues earlier on.
