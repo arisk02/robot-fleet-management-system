@@ -15,3 +15,12 @@
 ## Aris
 - redid error checking due to many bugs because of the system differences
 - implemented config file capability in the default constructor
+
+
+## What we did well
+- Established and assigned issues earlier this time. 
+- communicated about issues
+- collaborated and cooperated well
+
+## What we could improve
+- trying to stay more informed about each others tasks in order to avoid conflicts
