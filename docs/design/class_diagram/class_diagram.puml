@@ -1,5 +1,5 @@
 @startuml
-Class System{
+Class cleaningSystem{
     -robotList : map<int, robot*>
     -roomList : map<int, room>
     -futures : List<future<void>>
@@ -14,8 +14,15 @@ Class System{
     +getRoomCount()
     +getRobotCount()
     +clean(room, listRobots)
+    +cleanAsync(listRobots, cleaningTime, roomID)
     +repair(listRobots)
-    +recharge(robot)
+    +recharge(listRobots)
+    +loggerSetup(filename)
+    +log()
+    +validateRobotIDs(listRobots)
+    +validateRoomIDs(listRooms)
+    +validateRoomIDs(roomID)
+
 }
 Abstract class Robot{
     -robotId : int
@@ -50,10 +57,10 @@ class Room{
     +getSize()
     +getName()
 }
-System *-- Robot
+cleaningSystem *-- Robot
 Robot <|-- Sweeper
 Robot <|-- Vacuum
 Robot <|-- Mopper
-System *-- Room
+cleaningSystem *-- Room
 
 @enduml
