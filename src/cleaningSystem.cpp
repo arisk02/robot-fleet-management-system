@@ -272,7 +272,6 @@ namespace cleaningSys {
             for (int id : listRobots){//sets the status of all robots to cleaning
                 robots[id]->setRobotStatus(RobotStatus::CLEANING);
             }
-            /*
             vector<int> futuresToErase;
             for (int i=0; i< futures.size();i++){//this loop goes through each future in the futures list and invalidates it and erases it from the list in hopes of mitigating memory leaks
                 if (futures[i].wait_for(chrono::seconds(0))==future_status::ready){
@@ -282,7 +281,7 @@ namespace cleaningSys {
             }
             for (int i=futuresToErase.size()-1; i>=0;i--){
                 futures.erase(futures.begin()+i);
-            }*/
+            }
             rooms[roomid].setClean(false);
             rooms.at(roomid).setOccupiedByRobot(true);
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
