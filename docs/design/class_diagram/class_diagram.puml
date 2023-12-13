@@ -1,12 +1,28 @@
 @startuml
-Class System{
-    -robotList : List
-    -roomList : List
+Class cleaningSystem{
+    -robotList : map<int, robot*>
+    -roomList : map<int, room>
+    -futures : List<future<void>>
+    -robotCounter : int
+    -roomCounter : int
+    -logFilename : string
+
     +queryRobotStatus(listRobots)
+    +queryRobotStatus()
     +queryRoomStatus(listRooms)
+    +queryRoomStatus()
+    +getRoomCount()
+    +getRobotCount()
     +clean(room, listRobots)
-    +repair(robot)
-    +recharge(robot)
+    +cleanAsync(listRobots, cleaningTime, roomID)
+    +repair(listRobots)
+    +recharge(listRobots)
+    +loggerSetup(filename)
+    +log()
+    +validateRobotIDs(listRobots)
+    +validateRoomIDs(listRooms)
+    +validateRoomIDs(roomID)
+
 }
 Abstract class Robot{
     -robotId : int
@@ -19,7 +35,7 @@ Abstract class Robot{
     -status : enum
     -lastUsed : time_t
     +getRobotId()
-    +getRobotStatus()
+    +getRobotSize()
     +getRobotType()
     +getRobotBatteryLevel()
     +getRobotMaxBattery()
@@ -29,29 +45,29 @@ Abstract class Robot{
     +setRobotStatus()
     +setRobotLastUsed()
     +getRobotLastUsed()
+    +fixRobot()
+    +chargeRobot()
 }
 class Sweeper
 class Vacuum
 class Mopper
 class Room{
-    -name : String
+    -id : int
     -size : enum
     -clean : Boolean
-    +isClean()
+    -occupied : Boolean
+    +getClean()
+    +setClean(newClean)
     +getSize()
-    +getName()
+    +setSize(newSize)
+    +getOccupiedByRobot()
+    +setOccupiedByRobot(newOccupied)
+    +getId()
 }
-class Logger{
-    -snapshotInterval
-    -saveFile
-    -save(data)
-    -serialize(listData)
-}
-System *-- Robot
+cleaningSystem *-- Robot
 Robot <|-- Sweeper
 Robot <|-- Vacuum
 Robot <|-- Mopper
-System *-- Room
-Logger -> System
+cleaningSystem *-- Room
 
 @enduml
