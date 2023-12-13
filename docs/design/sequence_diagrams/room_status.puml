@@ -1,13 +1,14 @@
 @startuml
 
-User ->  System: Enter Room status command
+User ->  ProgramMain: Select rooms to be queried
+ProgramMain -> cleaningSystem : sends list of robot IDs
 loop For each room
-System -> Room: Requests status
-Room -> System: Returns Status [size, clean or not clean]
-activate System #LightGoldenRodYellow
-System -> System : Format Data
-System -> User: Outputs status [size, cleanliness]
-deactivate
+cleaningSystem -> Room: Requests status
+Room -> cleaningSystem: Returns Status [size,\ncleanliness, occupied status]
+cleaningSystem -> cleaningSystem : Format Data
 end
+cleaningSystem -> ProgramMain : Outputs status vector
+ProgramMain -> ProgramMain : Formats vector into output\nstring
+ProgramMain -> User : Prints information
 
 @enduml
