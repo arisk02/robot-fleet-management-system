@@ -1,38 +1,26 @@
 @startuml loggerSequence
-!define CSVFILE class width 80
-!define LOGGER class width 80
-!define SYSTEM class width 80
-!define ROBOT class width 80
+
 
 actor CSVfile
-actor Logger
-actor System
+actor cleaningSystem
 actor Robot
 actor Room
 
 hide footbox
+cleaningSystem -> cleaningSystem : collect number of robots\nand rooms and any info\nfor column titles
+cleaningSystem -> CSVfile : add column titles
 
-loop 
-Logger -> System: requestStatus()
-activate System
-loop for each Robot
-    System -> Robot: requestStatus()
-    activate Robot
-    Robot --> System: status
-    deactivate Robot
-end loop
-loop for each Room
-    System -> Room: requestStatus()
-    activate Room
-    Room --> System: status
-    deactivate Room
-end loop
-System --> Logger: collective status
-deactivate System
-
-Logger -> CSVfile: writeStatusToCSV()
-
-Logger -> Logger: wait x amount of time
-end loop
+loop every time user returns to main menu
+    cleaningSystem -> cleaningSystem : get robot status vector\nfrom queryRobotStatus()
+    cleaningSystem -> cleaningSystem : get room status vector\nfrom queryRoomStatus()
+    cleaningSystem -> cleaningSystem : get local time 
+    cleaningSystem -> CSVfile : add local time to first column
+    loop For each robot
+        cleaningSystem -> CSVfile : add robot status and battery
+        end
+    loop For each room
+        cleaningSystem -> CSVfile : add room cleanliness and\noccupied status
+        end
+end
 
 @enduml loggerSequence
