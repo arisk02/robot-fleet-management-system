@@ -1,4 +1,4 @@
-@startuml
+@startuml clean_sequence-diag
 User -> cleaningSystem : Clean command (list of robot ids and room)
 cleaningSystem -> Room : Request room status
 Room -> cleaningSystem : Supply room status
