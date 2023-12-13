@@ -35,7 +35,7 @@ Abstract class Robot{
     -status : enum
     -lastUsed : time_t
     +getRobotId()
-    +getRobotStatus()
+    +getRobotSize()
     +getRobotType()
     +getRobotBatteryLevel()
     +getRobotMaxBattery()
@@ -45,17 +45,24 @@ Abstract class Robot{
     +setRobotStatus()
     +setRobotLastUsed()
     +getRobotLastUsed()
+    +fixRobot()
+    +chargeRobot()
 }
 class Sweeper
 class Vacuum
 class Mopper
 class Room{
-    -name : String
+    -id : int
     -size : enum
     -clean : Boolean
-    +isClean()
+    -occupied : Boolean
+    +getClean()
+    +setClean(newClean)
     +getSize()
-    +getName()
+    +setSize(newSize)
+    +getOccupiedByRobot()
+    +setOccupiedByRobot(newOccupied)
+    +getId()
 }
 cleaningSystem *-- Robot
 Robot <|-- Sweeper
