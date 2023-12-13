@@ -119,7 +119,7 @@ namespace cleaningSys {
             }
         }
         else {
-                fmt::print("\nCannot find file.");
+                fmt::print("\nCannot find configuration file.");
             }
 
     }
