@@ -1,7 +1,7 @@
-# This is your user guide's top level!
+# Welcome to RBS!
+## Here you will learn how to use the features that are at your disposal.
 
--Welcome to RBS!
--Here you will learn how to use the features that are at your disposal.
+
 
 1. QueryRobotStatus:
 
