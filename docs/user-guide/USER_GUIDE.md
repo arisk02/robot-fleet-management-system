@@ -1,4 +1,4 @@
-# Welcome to RBS!
+# Welcome to RMS!
 ## Here you will learn how to use the features that are at your disposal.
 
 
