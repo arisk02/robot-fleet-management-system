@@ -1,243 +1,237 @@
 #include <iostream>
 #include <vector>
+#include <cctype>
 #include <string>
 #include <fmt/core.h>
 #include <sstream>
+#include <filesystem>
 #include "../src/cleaningSystem.cpp"
 
 
 using namespace std;
 using namespace cleaningSys;
 
-cleaningSystem create(int def,  int smallScrubbers, int mediumScrubbers, int largeScrubbers,
-                                int smallVacuums, int mediumVacuums, int largeVacuums,
-                                int smallMoppers, int mediumMoppers, int largeMoppers,
-                                int smallRooms, int mediumRooms, int largeRooms) {
-    if (def == 1) {
-        return cleaningSystem(smallScrubbers, mediumScrubbers, largeScrubbers,
-                              smallVacuums, mediumVacuums, largeVacuums,
-                              smallMoppers, mediumMoppers, largeMoppers,
-                              smallRooms, mediumRooms, largeRooms);
-    }
-    else {
-        return cleaningSystem();
-    }
-}
-
 // Create custom split() function.  
-std::vector<int> customSplit(const std::string& input) {
-    std::vector<int> result;
-    std::istringstream iss(input);
+vector<int> customSplit(string choice, string er) {
+    string userInput;
+    vector<int> numbers;
 
-    int id;
-    while (iss >> id) {
-        result.push_back(id);
+    while (true) {
+        fmt::print("{}", choice);
+        getline(cin, userInput);
+
+        istringstream iss(userInput);
+        int num;
+
+        while (iss >> num) {
+            numbers.push_back(num);
+        }
+
+        if (iss.fail() && !iss.eof()) {
+            fmt::print("{}", er);
+            numbers.clear();  // Clear the vector for invalid input
+        } else {
+            break;  // Exit the loop if input is valid
+        }
     }
-
-    return result;
+    return numbers;
 }
+
+
 
 int main() {
-    // if (argc != 3) {
-    //     cout << "Usage: Please enter the number of rooms and the number of robots" << endl;
-    //     return 1;
-    // }
-    fmt::print("Welcome to your Robot Fleet Management System!\n");
-    fmt::print("Input 0 to create a fleet of default size, or 1 for custom size:\n");
 
-    int choice;
-    cin >> choice;
+    
+    fmt::print("Welcome to your Robot Fleet Management System!");
 
-    int smallScrubbers;
-    int mediumScrubbers;
-    int largeScrubbers;
+    cleaningSystem newCleaningSystem;
 
-    int smallVacuums;
-    int mediumVacuums;
-    int largeVacuums;
-
-    int smallMoppers;
-    int mediumMoppers;
-    int largeMoppers;
-
-    int smallRooms;
-    int mediumRooms;
-    int largeRooms;
-
-
-    if (choice == 1) {
-        fmt::print("Desired number of small Scrubbers:\n");
-        cin >> smallScrubbers;
-        fmt::print("Desired number of medium Scrubbers:\n");
-        cin >> mediumScrubbers;
-        fmt::print("Desired number of large Scrubbers:\n");
-        cin >> largeScrubbers;
-        
-        fmt::print("Desired number of small Vacuums:\n");
-        cin >> smallVacuums;
-        fmt::print("Desired number of medium Vacuums:\n");
-        cin >> mediumVacuums;
-        fmt::print("Desired number of large Vacuums:\n");
-        cin >> largeVacuums;
-
-        fmt::print("Desired number of small Moppers:\n");
-        cin >> smallMoppers;
-        fmt::print("Desired number of medium Moppers:\n");
-        cin >> mediumMoppers;
-        fmt::print("Desired number of large Moppers:\n");
-        int largeMoppers;
-        cin >> largeMoppers;
-
-        fmt::print("Desired number of small Rooms:\n");
-        cin >> smallRooms;
-        fmt::print("Desired number of medium Rooms:\n");
-        cin >> mediumRooms;
-        fmt::print("Desired number of large Rooms:\n");
-        cin >> largeRooms;
-    }
-
-    cleaningSystem newCleaningSystem = create(choice, smallScrubbers, mediumScrubbers, largeScrubbers,
-                                                          smallVacuums, mediumVacuums, largeVacuums,
-                                                          smallMoppers, mediumMoppers, largeMoppers,
-                                                          smallRooms, mediumRooms, largeRooms);
-
-    newCleaningSystem.loggerSetup("log.csv");
+    newCleaningSystem.loggerSetup("../../config_and_log/log.csv");
     while (true) {
         newCleaningSystem.log();
-        fmt::print("Main:\n");
-        fmt::print("1. See Robot Status\n");
-        fmt::print("2. See Room Status\n");
-        fmt::print("3. Clean Room\n");
-        fmt::print("4. Fix Robot\n");
-        fmt::print("5. Quit\n");
+        fmt::print("\nMain:");
+        fmt::print("\n1. See Robot Status");
+        fmt::print("\n2. See Room Status");
+        fmt::print("\n3. Clean Room");
+        fmt::print("\n4. Fix Robot");
+        fmt::print("\n5. Quit");
 
         int choice; //potential bug: if user enters a non-integer, the program will crash
-        fmt::print("Enter your choice: ");
+        fmt::print("\nEnter your choice: ");
         cin >> choice;
 
         if (choice == 1) {
-            vector<int> robots;
 
-            string robotsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the robots whose status you want separated by a space, or -1 to show all: ");
             cin.ignore();
-            getline(cin, robotsids);
-            robots = customSplit(robotsids);
 
-            vector<string> status;
+            while (true) {
 
-            if (robots[0] == -1) {
-                status = newCleaningSystem.queryRobotStatus();
+                vector<int> robots = customSplit("\nEnter the ids of the robots whose status you want separated by a space, or -1 to show all: ",
+                                                "\nInvalid input: contains a non-integer. Robot ids are integers.");
+
+                vector<string> status;
+
+                if (robots[0] == -1 && robots.size() == 1) {
+                    status = newCleaningSystem.queryRobotStatus();
+                }
+
+                else if (!newCleaningSystem.validateRobotIDs(robots)){
+                    fmt::print("\nInvalid input: one or more of the input IDs do not exist.");
+                    continue;
+                }
+
+                else {
+                    status = newCleaningSystem.queryRobotStatus(robots);
+                }
+
+                int itemPerRobot = 3;
+
+                for (int i = 0; i < status.size(); i += itemPerRobot) {
+                    fmt::print("\nRobot {} is {} and is at the battery level {}", status[i], status[i + 1], status[i + 2]);
+                }
+
+                fmt::print("\nType anything to return to the main menu: ");
+                string val;
+                cin >> val;
+                break;
             }
-            else {
-                status = newCleaningSystem.queryRobotStatus(robots);
-            }
-
-            int itemPerRobot = 3;
-            for (int i = 0; i < status.size(); i += itemPerRobot) {
-                fmt::print("Robot {} is {} and is at the battery level {}\n", status[i], status[i + 1], status[i + 2]);
-            }
-
-            fmt::print("Type anything to return to the main menu: ");
-            string val;
-            cin >> val;
 
         } else if (choice == 2) {
-            vector<int> rooms;
 
-            string roomsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the rooms whose status you want separated by a space, or -1 to show all: ");
             cin.ignore();
-            getline(cin, roomsids);
-            rooms = customSplit(roomsids);
 
-            vector<string> status;
+            while (true) {
 
-            if (rooms[0] == -1) {
-                status = newCleaningSystem.queryRoomStatus();
+                vector<int> rooms = customSplit("\nEnter the ids of the rooms whose status you want separated by a space, or -1 to show all: ",
+                                                "\nInvalid input: contains a non-integer. Room ids are integers.");
+
+                vector<string> status;
+
+                if (rooms[0] == -1 && rooms.size() == 1) {
+                    status = newCleaningSystem.queryRoomStatus();
+                }
+
+                else if (!newCleaningSystem.validateRoomIDs(rooms)){
+                    fmt::print("\nInvalid input: one or more of the input IDs do not exist.");
+                    continue;
+                }
+
+                else {
+                    status = newCleaningSystem.queryRoomStatus(rooms);
+                }
+
+                int itemPerRoom = 4;
+
+                for (int i = 0; i < status.size(); i += itemPerRoom) {
+                    fmt::print("\nRoom {} is {} and is {}", status[i], status[i + 1], status[i + 2]);
+                }
+
+                fmt::print("\nType anything to return to the main menu: ");
+                string val;
+                cin >> val;
+                break;
             }
-            else {
-                status = newCleaningSystem.queryRoomStatus(rooms);
-            }
 
-            int itemPerRoom = 4;
-            for (int i = 0; i < status.size(); i += itemPerRoom) {
-                fmt::print("Room {} is {} and is {}\n", status[i], status[i + 1], status[i + 2]);
-            }
+        } else if (choice == 3) {
 
-            fmt::print("Type anything to return to the main menu: ");
-            string val;
-            cin >> val;
-
-        } else if (choice == 3) { //will probably need room size and type of cleaning at min and type of robot
-            int roomid; //potential bug: if user enters a non-integer, the program will crash
-            cout << "Enter the id of the room you want to clean: ";
-            cin >> roomid;
+            cin.ignore();
 
             vector<int> robots;
-
-            string robotsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the robots you want to assign to that room: ");
-            cin.ignore();
-            getline(cin, robotsids);
-            robots = customSplit(robotsids);
-
-            newCleaningSystem.clean(roomid, robots);
+            vector<int> roomid;
             
-            fmt::print("Type anything to return to the main menu: ");
-            string val;
-            cin >> val;
+            while(true) {
+
+                roomid = customSplit("\nEnter the id of the room you want to clean: ",
+                                    "\nInvalid input: contains a non-integer. Room ids are integers.");
+
+                if (roomid.size() != 1) {
+                    fmt::print("\nYou can only input 1 room to clean. ");
+                    continue;
+                }
+
+                if (!newCleaningSystem.validateRoomIDs(roomid)) {
+                    fmt::print("\nInvalid input: input ID does not exist.");
+                    continue;
+                }
+
+                while (true) {
+
+                    robots = customSplit("\nEnter the ids of the robots you want to assign to that room: ",
+                                        "\nInvalid input: contains a non-integer. Robot ids are integers.");
+
+                    if (!newCleaningSystem.validateRobotIDs(robots)){
+                            fmt::print("\nInvalid input: one or more of the input IDs do not exist.");
+                            continue;
+                    }
+
+                    break;
+
+                }
+
+                newCleaningSystem.clean(roomid[0], robots);
+                fmt::print("\nType anything to return to the main menu: ");
+                string val;
+                cin >> val;
+                break;
+            }
 
         } else if (choice == 4) {
-            vector<int> robots;
 
-            string robotsids; //potential bug: if user enters a non-integer, the program will crash
-            fmt::print("Enter the ids of the robots you want to fix: ");
             cin.ignore();
-            getline(cin, robotsids);
-            robots = customSplit(robotsids);
 
             while(true) {
-                fmt::print("Please select a command:\n");
-                fmt::print("1. Charge robot\n");
-                fmt::print("2. Repair robot\n");
+
+                vector<int> robots = customSplit("\nEnter the ids of the robots you want to fix: ",
+                                                "\nInvalid input: contains a non-integer. Robot ids are integers.");
+
+                if (!newCleaningSystem.validateRobotIDs(robots)){
+                    fmt::print("\nInvalid input: one or more of the input IDs do not exist.");
+                    continue;
+                }
+
+                while(true) {
                     
-                int choice;
-                cin >> choice;
-                if (choice == 1) {
-                    newCleaningSystem.recharge(robots);
-                    fmt::print("Successfully recharged robot. Returning to main menu.\n");
-                    break;
+                    vector<int> choic = customSplit("\nPlease select a command:\n1. Charge robot\n2. Repair robot\nCommand: ",
+                                                "\nInvalid input: contains a non-integer. Choice has to be either 1 or 2.");
+
+                    if (choic.size() != 1) {
+                        fmt::print("\nInvalid input: input has to be of size 1.");
+                        continue;
+                    }
+
+                    int wht = choic[0];
+
+                    if (wht == 1) {
+                        newCleaningSystem.recharge(robots);
+                        fmt::print("\nSuccessfully recharged robots.");
+                        break;
+                    }
+                    else if (wht == 2) {
+                        newCleaningSystem.repair(robots);
+                        fmt::print("\nSuccessfully repaired robots.");
+                        break;
+                    }
+                    else {
+                        fmt::print("\nInvalid choice. Please enter 1 or 2.");
+                    }
                 }
-                else if (choice == 2) {
-                    newCleaningSystem.repair(robots);
-                    fmt::print("Successfully repaired robot. Returning to main menu. \n");
-                    break;
-                }
-                else {
-                        fmt::print("Bad input.\n");
-                }
+
+                fmt::print("\nType anything to return to the main menu: ");
+                string val;
+                cin >> val;
+                break;
             }
+
         } else if (choice == 5) {
-            fmt::print("Goodbye!\n");
+            fmt::print("\nGoodbye!");
             break;
-        } else {
-            fmt::print("Invalid choice. Please enter 1, 2, or 3.");
         }
+        
+        else {
+            fmt::print("\nInvalid choice. Please enter 1, 2, 3, 4 or 5");
+        }
+
     }
 
     return 0;
 }
-
-
-
-
-
-
-        
-        
-
-       
-            
-
-     

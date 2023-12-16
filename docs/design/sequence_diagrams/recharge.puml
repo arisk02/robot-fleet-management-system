@@ -1,10 +1,12 @@
 @startuml
 
-User -> System: Enters Recharge command
-activate System #YellowGreen
-System-> System: Battery swap simulation (through passage of time)
-System -> Robot: Update battery level to full
-deactivate
+User -> Main: Selects Recharge command
+Main -> System: calls recharge and passes a list of chargeable robot Ids 
+
+loop For each robot id
+    System -> Robot: call chargeRobot to update battery level to full
+end
+
 System -> User: Message [sucessfully recharged.]
 
 @enduml

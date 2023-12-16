@@ -1,5 +1,6 @@
 #include "hppfiles/cleaningSystem.hpp"
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <fmt/core.h>
 #include <cstdlib>
@@ -12,82 +13,115 @@ namespace cleaningSys {
 
 
     cleaningSystem::cleaningSystem() { 
-        rooms[0] = (Room(Room::Size::medium, true, 0));
-        robots[0] = (new Mopper(RobotSize::LARGE, 0));
-        robots[1] = (new Mopper(RobotSize::MEDIUM, 1));
-        robots[2] = (new Mopper(RobotSize::SMALL, 2));
-        robots[3] = (new Vacuum(RobotSize::MEDIUM, 3));
-        robots[4] = (new Scrubber(RobotSize::MEDIUM, 4));
-        robots[5] = (new Mopper(RobotSize::MEDIUM, 5));
-        roomCounter = 1;
-        robotCounter = 6;
-    }
 
-    cleaningSystem::cleaningSystem( int smallScrubbers, int mediumScrubbers, int largeScrubbers,
-                                    int smallVacuums, int mediumVacuums, int largeVacuums,
-                                    int smallMoppers, int mediumMoppers, int largeMoppers,
-                                    int smallRooms, int mediumRooms, int largeRooms){
+        // std::ifstream is RAII, i.e. no need to call close
+        const char* fileName = "../../config_and_log/config_file.txt";
+        ifstream cFile (fileName);
 
-        for(int i = 0; i < smallScrubbers; i++){
-            robots[robotCounter] = (new Scrubber(RobotSize::SMALL, robotCounter));
-            robotCounter++;
-        }
+        if (cFile.is_open())
+        {
 
-        for(int i = 0; i < mediumScrubbers; i++){
-            robots[robotCounter] = (new Scrubber(RobotSize::MEDIUM, robotCounter));
-            robotCounter++;
-        }
+            string line;
 
-        for(int i = 0; i < largeScrubbers; i++){
-            robots[robotCounter] = (new Scrubber(RobotSize::LARGE, robotCounter));
-            robotCounter++;
-        }
+            while(getline(cFile, line)){
 
-        for(int i = 0; i < smallVacuums; i++){
-            robots[robotCounter] = (new Vacuum(RobotSize::SMALL, robotCounter));
-            robotCounter++;
-        }
+                line.erase(remove_if(line.begin(), line.end(), ::isspace), line.end());
 
-        for(int i = 0; i < mediumVacuums; i++){
-            robots[robotCounter] = (new Vacuum(RobotSize::MEDIUM, robotCounter));
-            robotCounter++;
-        }
+                if (line[0] == '#' || line.empty()) continue;
 
-        for(int i = 0; i < largeVacuums; i++){
-            robots[robotCounter] = (new Vacuum(RobotSize::LARGE, robotCounter));
-            robotCounter++;
-        }
-        
-        for(int i = 0; i < smallMoppers; i++){
-            robots[robotCounter] = (new Mopper(RobotSize::SMALL, robotCounter));
-            robotCounter++;
-        }
+                int delimiterPos = line.find(":");
+                string name = line.substr(0, delimiterPos);
+                float value = stof(line.substr(delimiterPos + 1));
 
-        for(int i = 0; i < mediumMoppers; i++){
-            robots[robotCounter] = (new Mopper(RobotSize::MEDIUM, robotCounter));
-            robotCounter++;
-        }
+                if (name == "small_scrubbers") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Scrubber(RobotSize::SMALL, robotCounter));
+                        robotCounter++;
+                    }
+                }
 
-        for(int i = 0; i < largeMoppers; i++){
-            robots[robotCounter] = (new Mopper(RobotSize::LARGE, robotCounter));
-            robotCounter++;
-        }
+                else if (name == "medium_scrubbers") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Scrubber(RobotSize::MEDIUM, robotCounter));
+                        robotCounter++;
+                    }
+                }
 
-        for(int i = 0; i < smallRooms; i++){
-            rooms[roomCounter] = (Room(Room::Size::small, true, roomCounter));
-            roomCounter++;
-        }
+                else if (name == "large_scrubbers") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Scrubber(RobotSize::LARGE, robotCounter));
+                        robotCounter++;
+                    }
+                }
 
-        for(int i = 0; i < mediumRooms; i++){
-            rooms[roomCounter] = (Room(Room::Size::medium, true, roomCounter));
-            roomCounter++;
-        }
+                if (name == "small_vacuums") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Vacuum(RobotSize::SMALL, robotCounter));
+                        robotCounter++;
+                    }
+                }
 
-        for(int i = 0; i < largeRooms; i++){
-            rooms[roomCounter] = (Room(Room::Size::large, true, roomCounter));
-            roomCounter++;
+                else if (name == "medium_vacuums") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Vacuum(RobotSize::MEDIUM, robotCounter));
+                        robotCounter++;
+                    }
+                }
+
+                else if (name == "large_vacuums") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Vacuum(RobotSize::LARGE, robotCounter));
+                        robotCounter++;
+                    }
+                }
+
+                if (name == "small_moppers") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Mopper(RobotSize::SMALL, robotCounter));
+                        robotCounter++;
+                    }
+                }
+
+                else if (name == "medium_moppers") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Mopper(RobotSize::MEDIUM, robotCounter));
+                        robotCounter++;
+                    }
+                }
+
+                else if (name == "large_moppers") {
+                    for(int i = 0; i < value; i++){
+                        robots[robotCounter] = (new Mopper(RobotSize::LARGE, robotCounter));
+                        robotCounter++;
+                    }
+                }
+
+                if (name == "small_rooms") {
+                    for(int i = 0; i < value; i++){
+                        rooms[roomCounter] = (Room(Room::Size::small, true, roomCounter));
+                        roomCounter++;
+                    }
+                }
+
+                if (name == "medium_rooms") {
+                    for(int i = 0; i < value; i++){
+                        rooms[roomCounter] = (Room(Room::Size::medium, true, roomCounter));
+                        roomCounter++;
+                    }
+                }
+
+                if (name == "large_rooms") {
+                    for(int i = 0; i < value; i++){
+                        rooms[roomCounter] = (Room(Room::Size::large, true, roomCounter));
+                        roomCounter++;
+                    }
+                }
+            }
         }
-        
+        else {
+                fmt::print("\nCannot find configuration file.");
+            }
+
     }
 
     cleaningSystem::~cleaningSystem() {
@@ -238,7 +272,6 @@ namespace cleaningSys {
             for (int id : listRobots){//sets the status of all robots to cleaning
                 robots[id]->setRobotStatus(RobotStatus::CLEANING);
             }
-            /*
             vector<int> futuresToErase;
             for (int i=0; i< futures.size();i++){//this loop goes through each future in the futures list and invalidates it and erases it from the list in hopes of mitigating memory leaks
                 if (futures[i].wait_for(chrono::seconds(0))==future_status::ready){
@@ -248,7 +281,7 @@ namespace cleaningSys {
             }
             for (int i=futuresToErase.size()-1; i>=0;i--){
                 futures.erase(futures.begin()+i);
-            }*/
+            }
             rooms[roomid].setClean(false);
             rooms.at(roomid).setOccupiedByRobot(true);
             futures.push_back(async(launch::async, &cleaningSystem::cleanAsync, this, listRobots, cleaningTime, roomid));
@@ -357,5 +390,39 @@ namespace cleaningSys {
             }
         }
         logFile.close();
+    }
+    bool cleaningSystem::validateRobotIDs(vector<int> botIds){
+        for(int id : botIds){
+            if (robots.count(id)>0)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool cleaningSystem::validateRoomIDs(vector<int> roomIds){
+        for(int id : roomIds){
+            if (rooms.count(id)>0)
+            {
+                continue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool cleaningSystem::validateRoomIDs(int roomID){
+        if(rooms.count(roomID)>0){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

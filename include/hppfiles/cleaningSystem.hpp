@@ -25,24 +25,22 @@ namespace cleaningSys
 
         public:
         cleaningSystem();
-        cleaningSystem(int smallScrubbers, int mediumScrubbers, int largeScrubbers,
-                       int smallVacuums, int mediumVacuums, int largeVacuums,
-                       int smallMoppers, int mediumMoppers, int largeMoppers,
-                       int smallRooms, int mediumRooms, int largeRooms);
         ~cleaningSystem();
         vector<string> queryRobotStatus(vector<int> listRobots);
         vector<string> queryRobotStatus();//overload function that will query status of ALL robots
         vector<string> queryRoomStatus(vector<int> listRooms);
         vector<string> queryRoomStatus();//overload function that will query status of ALL rooms
+        inline int getRoomCount() {return roomCounter;}
+        inline int getRobotCount() {return robotCounter;}
         void clean(int room,vector<int> listRobots);
         void repair(vector<int> botIds);
         void recharge(vector<int> botIds);
         void cleanAsync(vector<int> listRobots, int cleaningTime, int roomID);
-        void repair(string robot);
-        void recharge(string robot);
         void loggerSetup(string filename);
         void log();
-      
+        bool validateRobotIDs(vector<int> botIds);
+        bool validateRoomIDs(vector<int> roomIds);
+        bool validateRoomIDs(int roomID);
     };
 }
 #endif

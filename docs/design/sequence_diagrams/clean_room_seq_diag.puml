@@ -1,35 +1,44 @@
-@startuml
-User -> System : Clean command (list of robot ids and room)
-System -> Room : Request room size and status
-Room -> System : Supply room size and status
+@startuml clean_sequence-diag
+User -> cleaningSystem : Clean command (list of robot ids and room)
+cleaningSystem -> Room : Request room status
+Room -> cleaningSystem : Supply room status
 alt Room status is being cleaned 
-    System -> User : Error message (cleaning in progress)
+    cleaningSystem -> User : Error message (cleaning in progress)
 else Room status is dirty or clean
     loop For each robot
-    System -> Robot : Request robot status\nand cleaning time 
-    Robot -> System : Supply robot status\nand cleaning time
+    cleaningSystem -> Robot : Request robot status\nand cleaning time 
+    Robot -> cleaningSystem : Supply robot status\nand cleaning time
     alt Robot is broken or already occupied
-        System -> User : Error message (robot occupied or broken)
+        cleaningSystem -> User : Error message (robot occupied or broken)
     else
-        System -> System : Add robot cleaning time to vector
-        System -> Robot : Change status to busy
+        cleaningSystem -> cleaningSystem : Add robot cleaning ability to total
     end
     end
-    System -> Room : Change status to cleaning in progress
-    System -> System : Launch async thread
-    loop while time<max cleaning time
-        activate System #LightBlue
-        System -> System : check if robot has broken\n(break odds times # of robots left cleaning)
-        System -> System : sleep 1 second
+    cleaningSystem -> Room : Request room size
+    Room -> cleaningSystem : Supply room size
+    cleaningSystem -> cleaningSystem : Calculate cleaning time
+    loop For each robot
+    cleaningSystem -> Robot : Set status to cleaning
     end
-    deactivate System
-    alt Successful Cleaning
-        System -> Room : Update status to clean
-        System -> Robot : Update status to ready
-    else Robot failure
-        System -> Room : Update status to not clean
-        System -> Robot : Update status to broken
+    cleaningSystem -> Room : Change clean to false
+    cleaningSystem -> cleaningSystem : Launch async thread
+    loop while time < cleaning_time
+        activate cleaningSystem #LightBlue
+        loop For each robot
+        cleaningSystem -> cleaningSystem : Check if robot has broken
+        alt Robot breaks or runs out of battery
+            cleaningSystem -> User : Error message
+        else else
+            cleaningSystem -> Robot : Deplete Battery Level
+            end
+        end
+        cleaningSystem -> cleaningSystem : Sleep 1 second
     end
+    loop For each robot
+    cleaningSystem -> Robot : Set status to availible
+    end
+     cleaningSystem -> Room : Update status to clean and \nset occupied status to false
+    deactivate cleaningSystem
 end
 
 @enduml
